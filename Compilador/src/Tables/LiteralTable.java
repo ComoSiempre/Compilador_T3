@@ -11,18 +11,18 @@ import java.util.Enumeration;
  * clase usada para la generacion de la tabla de literales con patron Singleton.
  * @author jonathan Vasquez - Eduardo Tapia
  */
-public class TablaLiterales {
+public class LiteralTable {
     //tabla que almacena literales
     private Hashtable<String,String> literales=new Hashtable<String,String>();
     private int serial=1;//variable usado para guardar los numeros guardados en tabla.
     
     //variable de instancia de la clase.
-    private static TablaLiterales instanciaTabla;
+    private static LiteralTable instanciaTabla;
     
     /**
      * constructor interno de la clase.
      */
-    private TablaLiterales(){ 
+    private LiteralTable(){ 
     }
     
     /**
@@ -30,9 +30,9 @@ public class TablaLiterales {
      * 
      * @return instancia de la clase
      */
-    public static TablaLiterales getInstancia(){
+    public static LiteralTable getInstancia(){
         if(instanciaTabla==null)
-            instanciaTabla=new TablaLiterales();
+            instanciaTabla=new LiteralTable();
         return instanciaTabla;
     }
     /**

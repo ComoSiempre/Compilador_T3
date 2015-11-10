@@ -22,8 +22,8 @@ import syntaxVisitor.GrapherVisitor;
 
 
 /**
- * Proyecto correspondiente a la integracion de la fase de analisis Sintactico en la implementacion del compilador
- * para el lenguaje K*, utilizando el analizador sintactico Java CUP.
+ * Proyecto correspondiente a la integracion de la fase de analisis Semantico en la implementacion del compilador
+ * para el lenguaje K*, utilizando el analizador sintactico Java CUP y el analizador Lexico Jflex.
  * @author:     Jonatham Vasquez - Eduardo Tapia
  * @version:    31/10/2015/3.1.1.
  */
@@ -162,7 +162,7 @@ public class Compilador {
                     
                     case 31: //NUM.
                         //guardo el literal a la tabla de literales.
-                        TablaLiterales.getInstancia().ingresarLiteral((String) text.value, numEj);
+                        LiteralTable.getInstancia().ingresarLiteral((String) text.value, numEj);
                         break;
                 }//fin switch
                 
