@@ -1,0 +1,14 @@
+void ordenar(void) {
+        int k;
+        for(k ::= 0,k LT 4,k+1) {
+            int f;
+            for(f ::= 0,f LT 4-k,f+1) {
+                if (sueldos[f] GT sueldos[f+1]) {
+                    int aux;
+                    aux::=sueldos[f];
+                    sueldos[f]::=sueldos[f+1];
+                    sueldos[f+1]::=aux;
+                }
+            }
+      }
+}

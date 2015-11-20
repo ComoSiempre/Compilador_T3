@@ -5,6 +5,9 @@
  */
 package ast;
 
+import semanticVisitor.ExtendedGrapherVisitor;
+import semanticVisitor.ScopeAnalisisVisitor;
+import semanticVisitor.TypeCheckVisitor;
 import syntaxVisitor.GrapherVisitor;
 
 /**
@@ -17,7 +20,7 @@ public class Expression extends Nodo implements visitaNodo {
     Nodo operacion1; //variable que puede ser tanto un Nodo expresion como Var(con variable o numero).
     String operador; // puede ser un operador de la gramatica relop, mulop, addop, powop.
     Nodo operacion2; //variable que puede ser un numero (String en .cup) o un Nodo Var o Call o Expression.
-    int valor; //variable que guardara el valor de las operaciones de +,-,*,/,^,**.
+    int valor=0; //variable que guardara el valor de las operaciones de +,-,*,/,^,**.
     boolean esComparacion=false; //variable flag que verificara si la expresion es una operacion o comparacion(EQ,LT,LEQ,etc..)
     
     
@@ -49,7 +52,13 @@ public class Expression extends Nodo implements visitaNodo {
                 this.valor = ((Var) this.operacion1).getNumeroExpresion() * ((Var) this.operacion2).getNumeroExpresion();
                 break;
             case "/":
-                this.valor = ((Var) this.operacion1).getNumeroExpresion() / ((Var) this.operacion2).getNumeroExpresion();
+                if(((Var)this.operacion2).getNumeroExpresion()==0){
+                    //en caso de que de la operacion : 5/0 por ejemplo.
+                    //esto no deberia suceder, pero sucedio al testear la sintaxis, deberia ser error semantico (modificar esto para que lanze error semantico).
+                    this.valor=0; 
+                }else{
+                    this.valor = ((Var) this.operacion1).getNumeroExpresion() / ((Var) this.operacion2).getNumeroExpresion();
+                }
                 break;
         }
 
@@ -184,8 +193,9 @@ public class Expression extends Nodo implements visitaNodo {
         if(this.operacion2 instanceof Expression){
             //quiere decir que la expresion viene de alguna gramatica de operacion d comparacacion o de calculo.
             this.valor =((Expression)this.operacion2).getValor();
-        }else{
-            //en caso contrario, el nodo corresponde a un nodo Var, por lo que el valor guardado esta en la variable de numero de var.
+        }else if(this.operacion2 instanceof Call){//en caso de que la asignacion sea desde un llamado a funcion.
+            this.valor=((Call)this.operacion2).getValorRetorno();
+        }else{//en caso contrario, el nodo corresponde a un nodo Var, por lo que el valor guardado esta en la variable de numero de var.
             this.valor =((Var)this.operacion2).getNumeroExpresion();
         }
         
@@ -214,6 +224,21 @@ public class Expression extends Nodo implements visitaNodo {
     @Override
     public void aceptar(GrapherVisitor v) {
         v.visitar(this);
+    }
+
+    @Override
+    public void aceptar(ScopeAnalisisVisitor s) {
+       s.visitar(this);
+    }
+
+    @Override
+    public void aceptar(TypeCheckVisitor t) {
+        t.visitar(this);
+    }
+
+    @Override
+    public void aceptar(ExtendedGrapherVisitor v2) {
+        v2.visitar(this);
     }
     
     

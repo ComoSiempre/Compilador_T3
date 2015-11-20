@@ -1,0 +1,124 @@
+digraph G { 
+"nodo0"[label="Progama"]; 
+"nodo1"[label="Funcion: ordenar,void"]; 
+"nodo0"->"nodo1"; 
+"nodo2"[label="Compound Statement", color=deepskyblue]; 
+"nodo1"->"nodo2"; 
+"nodo3"[label="k:INT"]; 
+"nodo2"->"nodo3"; 
+"nodo4"[label="for"]; 
+"nodo2"->"nodo4"; 
+"nodo5"[label="::=
+Value: 0"]; 
+"nodo4"->"nodo5"; 
+"nodo6"[label="Variable: k"]; 
+"nodo5"->"nodo6"; 
+"nodo7"[label="0"]; 
+"nodo5"->"nodo7"; 
+"nodo8"[label="LT"]; 
+"nodo4"->"nodo8"; 
+"nodo9"[label="Variable: k"]; 
+"nodo8"->"nodo9"; 
+"nodo10"[label="4"]; 
+"nodo8"->"nodo10"; 
+"nodo11"[label="+
+Value: 0"]; 
+"nodo4"->"nodo11"; 
+"nodo12"[label="Variable: k"]; 
+"nodo11"->"nodo12"; 
+"nodo13"[label="1"]; 
+"nodo11"->"nodo13"; 
+"nodo14"[label="Compound Statement", color=deepskyblue]; 
+"nodo4"->"nodo14"; 
+"nodo15"[label="f:INT"]; 
+"nodo14"->"nodo15"; 
+"nodo16"[label="for"]; 
+"nodo14"->"nodo16"; 
+"nodo17"[label="::=
+Value: 0"]; 
+"nodo16"->"nodo17"; 
+"nodo18"[label="Variable: f"]; 
+"nodo17"->"nodo18"; 
+"nodo19"[label="0"]; 
+"nodo17"->"nodo19"; 
+"nodo20"[label="LT"]; 
+"nodo16"->"nodo20"; 
+"nodo21"[label="Variable: f"]; 
+"nodo20"->"nodo21"; 
+"nodo22"[label="-
+Value: 0"]; 
+"nodo20"->"nodo22"; 
+"nodo23"[label="4"]; 
+"nodo22"->"nodo23"; 
+"nodo24"[label="Variable: k"]; 
+"nodo22"->"nodo24"; 
+"nodo25"[label="+
+Value: 0"]; 
+"nodo16"->"nodo25"; 
+"nodo26"[label="Variable: f"]; 
+"nodo25"->"nodo26"; 
+"nodo27"[label="1"]; 
+"nodo25"->"nodo27"; 
+"nodo28"[label="Compound Statement", color=deepskyblue]; 
+"nodo16"->"nodo28"; 
+"nodo29"[label="if"]; 
+"nodo28"->"nodo29"; 
+"nodo30"[label="GT"]; 
+"nodo29"->"nodo30"; 
+"nodo31"[label="Variable: sueldos[]"]; 
+"nodo30"->"nodo31"; 
+"nodo32"[label="Variable: f"]; 
+"nodo31"->"nodo32"; 
+"nodo33"[label="Variable: sueldos[]"]; 
+"nodo30"->"nodo33"; 
+"nodo34"[label="+
+Value: 0"]; 
+"nodo33"->"nodo34"; 
+"nodo35"[label="Variable: f"]; 
+"nodo34"->"nodo35"; 
+"nodo36"[label="1"]; 
+"nodo34"->"nodo36"; 
+"nodo37"[label="Compound Statement", color=deepskyblue]; 
+"nodo29"->"nodo37"; 
+"nodo38"[label="aux:INT"]; 
+"nodo37"->"nodo38"; 
+"nodo39"[label="::=
+Value: 0"]; 
+"nodo37"->"nodo39"; 
+"nodo40"[label="Variable: aux"]; 
+"nodo39"->"nodo40"; 
+"nodo41"[label="Variable: sueldos[]"]; 
+"nodo39"->"nodo41"; 
+"nodo42"[label="Variable: f"]; 
+"nodo41"->"nodo42"; 
+"nodo43"[label="::=
+Value: 0"]; 
+"nodo37"->"nodo43"; 
+"nodo44"[label="Variable: sueldos[]"]; 
+"nodo43"->"nodo44"; 
+"nodo45"[label="Variable: f"]; 
+"nodo44"->"nodo45"; 
+"nodo46"[label="Variable: sueldos[]"]; 
+"nodo43"->"nodo46"; 
+"nodo47"[label="+
+Value: 0"]; 
+"nodo46"->"nodo47"; 
+"nodo48"[label="Variable: f"]; 
+"nodo47"->"nodo48"; 
+"nodo49"[label="1"]; 
+"nodo47"->"nodo49"; 
+"nodo50"[label="::=
+Value: 0"]; 
+"nodo37"->"nodo50"; 
+"nodo51"[label="Variable: sueldos[]"]; 
+"nodo50"->"nodo51"; 
+"nodo52"[label="+
+Value: 0"]; 
+"nodo51"->"nodo52"; 
+"nodo53"[label="Variable: f"]; 
+"nodo52"->"nodo53"; 
+"nodo54"[label="1"]; 
+"nodo52"->"nodo54"; 
+"nodo55"[label="Variable: aux"]; 
+"nodo50"->"nodo55"; 
+}

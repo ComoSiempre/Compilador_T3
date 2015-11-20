@@ -5,6 +5,9 @@
  */
 package ast;
 
+import semanticVisitor.ExtendedGrapherVisitor;
+import semanticVisitor.ScopeAnalisisVisitor;
+import semanticVisitor.TypeCheckVisitor;
 import syntaxVisitor.GrapherVisitor;
 
 /**
@@ -13,10 +16,10 @@ import syntaxVisitor.GrapherVisitor;
  */
 public class VarDec extends Nodo implements visitaNodo {
 
-    String tipoID; //variable que guarda el tipo de la declaracion de variable (int o void)
-    String ID;  //variable que guarda el nombre de la declaracion de varialbe.
-    int numeroVector; //variable que guarda el numero del tamaño del vector en caso de que la declaracion corresponda a un vector.
-    boolean esVector; //variable flag que identifica la declaracion como varialbe normal o vector.
+    private String tipoID; //variable que guarda el tipo de la declaracion de variable (int o void)
+    private String ID;  //variable que guarda el nombre de la declaracion de varialbe.
+    private int numeroVector; //variable que guarda el numero del tamaño del vector en caso de que la declaracion corresponda a un vector.
+    private boolean esVector; //variable flag que identifica la declaracion como varialbe normal o vector.
     /**
      * constructor usado en caso de que la declaracion en normal.
      * @param tipo el tipo de la variable (int o void)
@@ -51,13 +54,13 @@ public class VarDec extends Nodo implements visitaNodo {
     public String toGrapher(String nombrePadre, int contNodos){
         String lineas="";
         //condicionante segun el tipo de declaracion de variable.
-        if (this.esVector==false){
+        if (this.isEsVector()==false){
             //se crea el nodo dandole el identificador.
-            lineas += "\"nodo"+contNodos+"\"[label=\""+this.ID+":"+this.tipoID+"\"]; \n";
+            lineas += "\"nodo"+contNodos+"\"[label=\""+this.getID()+":"+this.getTipoID()+"\"]; \n";
             //enlazo el nuevo nodo con su padre.
             lineas += nombrePadre+"->\"nodo"+contNodos+"\"; \n";
         }else{
-            lineas += "\"nodo"+contNodos+"\"[label=\""+this.ID+":"+this.tipoID+"["+this.numeroVector+"]\"]; \n";
+            lineas += "\"nodo"+contNodos+"\"[label=\""+this.getID()+":"+this.getTipoID()+"["+this.getNumeroVector()+"]\"]; \n";
             lineas += nombrePadre+"->\"nodo"+contNodos+"\"; \n";
         }
         return lineas;
@@ -66,6 +69,49 @@ public class VarDec extends Nodo implements visitaNodo {
     @Override
     public void aceptar(GrapherVisitor v) {
         v.visitar(this);
+    }
+
+    @Override
+    public void aceptar(ScopeAnalisisVisitor s) {
+       s.visitar(this);
+    }
+
+    @Override
+    public void aceptar(TypeCheckVisitor t) {
+        t.visitar(this);
+    }
+
+    @Override
+    public void aceptar(ExtendedGrapherVisitor v2) {
+        v2.visitar(this);
+    }
+
+    /**
+     * @return the tipoID
+     */
+    public String getTipoID() {
+        return tipoID;
+    }
+
+    /**
+     * @return the ID
+     */
+    public String getID() {
+        return ID;
+    }
+
+    /**
+     * @return the numeroVector
+     */
+    public int getNumeroVector() {
+        return numeroVector;
+    }
+
+    /**
+     * @return the esVector
+     */
+    public boolean isEsVector() {
+        return esVector;
     }
     
     

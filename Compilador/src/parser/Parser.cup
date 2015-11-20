@@ -140,18 +140,30 @@ var_declaration     ::= type_specifier:ts ID:id PUNTOCOMA
                             {:
                                 this.parser.cadena = "var_declaration ::= type_specifier ID SEMICOLON \n"+this.parser.cadena;
                                 if(ts.equalsIgnoreCase("int")){
-                                    RESULT= new VarDec("INT",id, false);
+                                    VarDec vardec = new VarDec("INT",id, false);
+                                    vardec.setFila(idleft+1);//ingreso la fila de la vairable.
+                                    vardec.setColumna(idright+1); //ingreso la columna de la variable.
+                                    RESULT= vardec;
                                 }else{
-                                    RESULT=new VarDec("VOID",id, false);
+                                    VarDec vardec = new VarDec("VOID",id, false);
+                                    vardec.setFila(idleft+1);//ingreso la fila de la vairable.
+                                    vardec.setColumna(idright+1); //ingreso la columna de la variable.
+                                    RESULT= vardec;
                                 }
                             :}
                         | type_specifier:ts ID:id CORCH_IZQ NUM:num CORCH_DER PUNTOCOMA 
                             {:
                                 this.parser.cadena = "var_declaration ::= type_specifier ID LSQUAREB NUM RSQUAREB SEMICOLON \n"+this.parser.cadena;
                                 if(ts.equalsIgnoreCase("int")){
-                                    RESULT= new VarDec("INT", id, true, Integer.parseInt(num));
+                                    VarDec vardecVec = new VarDec("INT", id, true, Integer.parseInt(num));
+                                    vardecVec.setFila(idleft+1); //se ingresa fila.
+                                    vardecVec.setColumna(idright+1); //se ingresa columna.
+                                    RESULT= vardecVec;
                                 }else{
-                                    RESULT=new VarDec("VOID", id, true, Integer.parseInt(num));
+                                    VarDec vardecVec = new VarDec("VOID", id, true, Integer.parseInt(num));
+                                    vardecVec.setFila(idleft+1); //se ingresa fila.
+                                    vardecVec.setColumna(idright+1); //se ingresa columna.
+                                    RESULT= vardecVec;
                                 }
                             :};
 
@@ -173,7 +185,10 @@ fun_declaration     ::= type_specifier:ts ID:id PARENT_IZQ params:ps PARENT_DER 
                                 ((FunDec) ps).setID(id);
                                 //ingreso el tipo de funcion al nodo anteriormente creado.
                                 ((FunDec) ps).setTipoFunction(ts);
-
+                                //ingreso la fila de la declaracion de la funcion.
+                                ps.setFila(idleft+1);
+                                //ingreso la columna de la declaracion de funcion.
+                                ps.setColumna(idright+1);    
                                 //condicionante usado si los componentes existen o no.
                                 if(cs != null){
                                     ((FunDec) ps).setCompound_stmt(cs);
@@ -217,13 +232,23 @@ param               ::= type_specifier:ts ID:id
                             {:
                                 this.parser.cadena = "param ::= type_specifier \n"+this.parser.cadena;
                                 //se crea el nodo parametro.
-                                RESULT=new Param(ts,id,false);
+                                Param parametro = new Param(ts,id,false);
+                                //ingreso la fila de la declaracion de parametro.
+                                parametro.setFila(idleft+1);
+                                //ingreso la columna de la declaracion de parametro.
+                                parametro.setColumna(idright+1);
+                                RESULT= parametro;
                             :}	
                         | type_specifier:ts ID:id CORCH_IZQ CORCH_DER 
                             {:
                                 this.parser.cadena = "param ::= type_specifier ID CORCH_IZQ CORCH_DER \n"+this.parser.cadena;
                                 //se crea el nodo parametro (parametro vector).
-                                RESULT=new Param(ts, id, true);
+                                Param parametro = new Param(ts, id, true);
+                                //ingreso la fila de la declaracion de parametro.
+                                parametro.setFila(idleft+1);
+                                //ingreso la columna de la declaracion de parametro.
+                                parametro.setColumna(idright+1);
+                                RESULT= parametro;
                             :};
 
 compound_stmt       ::= LLAVE_IZQ local_declarations:ld statement_list:sl LLAVE_DER 
@@ -300,6 +325,7 @@ expression_stmt     ::= expression:e PUNTOCOMA
                         | PUNTOCOMA 
                             {:
                                 this.parser.cadena = "expression_stmt ::= PUNTOCOMA \n"+this.parser.cadena;
+                                
                             :};
 
 selection_stmt      ::= IF PARENT_IZQ expression:e PARENT_DER statement:s 
@@ -368,12 +394,25 @@ var                 ::= ID:id
                             {:
                                 this.parser.cadena = "var ::= ID \n"+this.parser.cadena;
                                 //se crea el nodo Var.
-                                RESULT= new Var(id);
+                                Var variable = new Var(id);
+                                //se ingresa la fila de la variable en el codigo.
+                                variable.setFila(idleft+1);
+                                //se ingresa la columna de la variable en el codigo.
+                                variable.setColumna(idright+1);
+                                RESULT= variable;
+                                
+
                             :} 
                         | ID:id CORCH_IZQ expression:e CORCH_DER 
                             {:
                                 this.parser.cadena = "var ::= ID LSQUAREB expression RSQUAREB \n"+this.parser.cadena;
-                                RESULT= new Var(id,e);
+                                //se crea el nodo variable.
+                                Var variable = new Var(id,e);
+                                //se ingresa la fila de la variable en el codigo.
+                                variable.setFila(idleft+1);
+                                //se ingresa la columna de la variable en el codigo.
+                                variable.setColumna(idright+1);
+                                RESULT= variable;
                             :};
 
 simple_expression   ::= additive_expression:ae1 relop:r additive_expression:ae2 
@@ -383,6 +422,10 @@ simple_expression   ::= additive_expression:ae1 relop:r additive_expression:ae2
                                 Expression e = new Expression(ae1, r.toString(), ae2);
                                 //es una expresion de comparacion, por lo que se le da true al flag(importante para derivar los resultados de operaciones).
                                 e.setEsComparacion(true);
+                                //se ingresa la fila de la expresion en el codigo.
+                                e.setFila(rleft+1);
+                                //se ingresa la fila de la expresion en el codigo.
+                                e.setColumna(rright+1);
                                 RESULT=e;
                             :} 
                         | additive_expression:ae 
@@ -429,6 +472,10 @@ additive_expression ::= additive_expression:ae addop:a term:t
                                 Expression e = new Expression(ae,a,t);
                                 //se calcula el valor de la operacion.
                                 e.calculoValor();
+                                //se ingresa la fila de la expresion en el codigo.
+                                e.setFila(aleft+1);
+                                //se ingresa la fila de la expresion en el codigo.
+                                e.setColumna(aright+1);
                                 RESULT=e;
                             :} 
                         | term:t 
@@ -451,10 +498,16 @@ addop               ::= SUMA:sum
 term                ::= term:e mulop:m factor:f 
                             {:
                                 this.parser.cadena = "term ::= term mulop factor \n"+this.parser.cadena;
+                                
                                 //se crea el nodo expression.
                                 Expression exp = new Expression(e,m,f);
                                 //se calcula el valor de la operacion.
                                 exp.calculoValor();
+                                //se ingresa la fila de la expresion en el codigo.
+                                exp.setFila(mleft+1);
+                                //se ingresa la fila de la expresion en el codigo.
+                                exp.setColumna(mright+1);
+                                
                                 RESULT=exp;
                             :} 
                         | factor:f 
@@ -477,7 +530,14 @@ mulop               ::= MULTIPLICACION:mu
 factor              ::= factor:f powop:p exp:e 
                             {:
                                 this.parser.cadena = "factor ::= factor powop exp \n"+this.parser.cadena;
-                                RESULT=new Expression(f,p,e);
+                                //se crrea la expresion.
+                                Expression fac = new Expression(f,p,e);
+                                //se ingresa la fila de la expresion en el codigo.
+                                fac.setFila(pleft+1);
+                                //se ingresa la fila de la expresion en el codigo.
+                                fac.setColumna(pright+1);
+                                
+                                RESULT=fac;
                             :}
                         | exp:e 
                             {:
@@ -515,7 +575,15 @@ exp                 ::= PARENT_IZQ expression:e PARENT_DER
                             {:
                                 this.parser.cadena = "exp ::= NUM \n"+this.parser.cadena;
                                 //creo el nodo var que guardara el numero.
-                                RESULT=new Var(Integer.parseInt(num));
+                                Var variableNum = new Var(Integer.parseInt(num));
+                                //se ingresa la fila de la expresion en el codigo.
+                                variableNum.setFila(numleft+1);
+                                //se ingresa la fila de la expresion en el codigo.
+                                variableNum.setColumna(numright+1);
+                                
+                                RESULT=variableNum;                                
+                                
+
                             :};
 
 call                ::= ID:id PARENT_IZQ args:ar PARENT_DER 
@@ -523,6 +591,10 @@ call                ::= ID:id PARENT_IZQ args:ar PARENT_DER
                                 this.parser.cadena = "call ::= ID:id PARENT_IZQ args PARENT_DER \n"+this.parser.cadena;
                                 //se ingresa la id al nodo en ascenso.
                                 ((Call)ar).setID(id);
+                                //se ingresa la fila del llamado a funcion en el codigo.
+                                ar.setFila(idleft+1);
+                                //se ingresa la columna del llamado a funcion en el codigo.
+                                ar.setColumna(idright+1);
                                 RESULT=ar;
                             :};
 

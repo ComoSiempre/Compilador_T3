@@ -230,10 +230,10 @@ public class Compilador {
             char[] s = sel.toCharArray();
             switch(s[0]){
                 case '1':
-                    compilar(dir+"/ejemplo_1.txt",dir,1);
+                    compilar(dir+"/P1_AllSyntax.ks",dir,1);
                     break;
                 case '2':
-                    compilar(dir+"/ejemplo_2.txt",dir,2);
+                    compilar(dir+"/P2_Prec-Asoc-Stmt.ks",dir,2);
                     break;
                 case '3':
                     compilar(dir+"/ejemplo_3.txt",dir,3);

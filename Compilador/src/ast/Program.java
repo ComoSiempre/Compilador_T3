@@ -7,6 +7,9 @@ package ast;
 
 import java.util.*;
 import syntaxVisitor.GrapherVisitor;
+import semanticVisitor.ExtendedGrapherVisitor;
+import semanticVisitor.ScopeAnalisisVisitor;
+import semanticVisitor.TypeCheckVisitor;
 
 /**
  * Clase que representa el nodo raiz  del AST y desde el cual comienza el recorrida por patron visitor.
@@ -49,6 +52,21 @@ public class Program implements visitaNodo {
     @Override
     public void aceptar(GrapherVisitor v) {
         v.visitar(this);
+    }
+
+    @Override
+    public void aceptar(ScopeAnalisisVisitor s) {
+       s.visitar(this);
+    }
+
+    @Override
+    public void aceptar(TypeCheckVisitor t) {
+        t.visitar(this);
+    }
+
+    @Override
+    public void aceptar(ExtendedGrapherVisitor v2) {
+        v2.visitar(this);
     }
     
 }

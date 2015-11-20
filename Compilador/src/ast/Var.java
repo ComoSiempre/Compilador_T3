@@ -5,6 +5,9 @@
  */
 package ast;
 
+import semanticVisitor.ExtendedGrapherVisitor;
+import semanticVisitor.ScopeAnalisisVisitor;
+import semanticVisitor.TypeCheckVisitor;
 import syntaxVisitor.GrapherVisitor;
 
 /**
@@ -16,7 +19,7 @@ public class Var extends Nodo implements visitaNodo {
 
     String ID; //variable que guarda el nombre de la variable.
     Object Expression; //variable que guarda la posible expresion de sigue la variable (gramatica 21). o un Integer en caso de que sea un numero (gramatica 30).
-    int numeroExpresion; //variable usada en el caso de que la expression sea un numero, gramatica 30, en este caso envez de subir el numero, se creara un NOdo var usando solo esta vairable.
+    int numeroExpresion=0; //variable usada en el caso de que la expression sea un numero, gramatica 30, en este caso envez de subir el numero, se creara un NOdo var usando solo esta vairable.
     /**
      * constructor 1, usado si la variable viene seguida por un nodo expression.
      * @param id nombre de la variable
@@ -92,6 +95,21 @@ public class Var extends Nodo implements visitaNodo {
     @Override
     public void aceptar(GrapherVisitor v) {
         v.visitar(this);
+    }
+
+    @Override
+    public void aceptar(ScopeAnalisisVisitor s) {
+       s.visitar(this);
+    }
+
+    @Override
+    public void aceptar(TypeCheckVisitor t) {
+        t.visitar(this);
+    }
+
+    @Override
+    public void aceptar(ExtendedGrapherVisitor v2) {
+        v2.visitar(this);
     }
     
 }

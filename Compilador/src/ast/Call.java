@@ -6,6 +6,9 @@
 package ast;
 
 import java.util.ArrayList;
+import semanticVisitor.ExtendedGrapherVisitor;
+import semanticVisitor.ScopeAnalisisVisitor;
+import semanticVisitor.TypeCheckVisitor;
 import syntaxVisitor.GrapherVisitor;
 
 /**
@@ -17,6 +20,9 @@ public class Call extends Nodo implements visitaNodo {
     String ID;
     //Lista que guarda los argumentos.
     ArrayList<Nodo> listaArgs= new ArrayList<Nodo>(); 
+    //variable que guarda el valor de retorno en caso de que sea un llamado a una funcion int.
+    //sin uso, borrar cuando se utilize.
+    private int valorRetorno=0;
     
     /**
      * constructor 1.
@@ -55,6 +61,28 @@ public class Call extends Nodo implements visitaNodo {
     @Override
     public void aceptar(GrapherVisitor v) {
         v.visitar(this);
+    }
+
+    @Override
+    public void aceptar(ScopeAnalisisVisitor s) {
+       s.visitar(this);
+    }
+
+    @Override
+    public void aceptar(TypeCheckVisitor t) {
+        t.visitar(this);
+    }
+
+    @Override
+    public void aceptar(ExtendedGrapherVisitor v2) {
+        v2.visitar(this);
+    }
+
+    /**
+     * @return the valorRetorno
+     */
+    public int getValorRetorno() {
+        return valorRetorno;
     }
     
 }

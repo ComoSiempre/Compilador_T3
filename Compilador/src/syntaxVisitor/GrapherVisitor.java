@@ -274,23 +274,32 @@ public class GrapherVisitor implements visitor {
         if(stmt.getTipoDeclaracion().equalsIgnoreCase("if") && stmt.getDeclaracion_else() == null){
             //el nodo corresponde a un nodo de IF.
             stmt.getExpresion().aceptar(this);
-            stmt.getDeclaracion().aceptar(this);
+            if(stmt.getDeclaracion()!= null)
+                //en caso de que hubiera un ; (expresion_stmt) en la declaracion (en este caso no se hace nodo).
+                stmt.getDeclaracion().aceptar(this);
         }else if(stmt.getTipoDeclaracion().equalsIgnoreCase("if-else") && stmt.getDeclaracion_else() != null){
             //el nodo corresponde a un nodo IF-ELSE.
             stmt.getExpresion().aceptar(this);
-            stmt.getDeclaracion().aceptar(this);
-            stmt.getDeclaracion_else().aceptar(this);
+            if(stmt.getDeclaracion()!= null)
+                //en caso de que hubiera un ; (expresion_stmt) en la declaracion (en este caso no se hace nodo).
+                stmt.getDeclaracion().aceptar(this);
+            if(stmt.getDeclaracion_else() != null)
+                stmt.getDeclaracion_else().aceptar(this);
         }else if(stmt.getTipoDeclaracion().equalsIgnoreCase("while")){
             //el nodo corresponde a un nodo WHILE.
             stmt.getExpresion().aceptar(this);
-            stmt.getDeclaracion().aceptar(this);
+            if(stmt.getDeclaracion()!= null)
+                //en caso de que hubiera un ; (expresion_stmt) en la declaracion (en este caso no se hace nodo).
+                stmt.getDeclaracion().aceptar(this);
             
         }else if(stmt.getTipoDeclaracion().equalsIgnoreCase("for")){
             //el nodo corresponde a un nodo FOR.
             stmt.getExpresion().aceptar(this);
             stmt.getExpresionFor2().aceptar(this);
             stmt.getExpresionFor3().aceptar(this);
-            stmt.getDeclaracion().aceptar(this);
+            if(stmt.getDeclaracion()!= null)
+                //en caso de que hubiera un ; (expresion_stmt) en la declaracion (en este caso no se hace nodo).
+                stmt.getDeclaracion().aceptar(this);
             
         }else if(stmt.getTipoDeclaracion().equalsIgnoreCase("return") && stmt.getExpresion() != null){
             //el nodo corresponde a un nodo RETURN (gramatica 2).

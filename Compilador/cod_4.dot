@@ -1,0 +1,18 @@
+digraph G { 
+"nodo0"[label="Progama"]; 
+"nodo1"[label="a:INT"]; 
+"nodo0"->"nodo1"; 
+"nodo2"[label="Funcion: main,int"]; 
+"nodo0"->"nodo2"; 
+"nodo3"[label="Param[b,int]"]; 
+"nodo2"->"nodo3"; 
+"nodo4"[label="Compound Statement", color=deepskyblue]; 
+"nodo2"->"nodo4"; 
+"nodo5"[label="::=
+Value: 0"]; 
+"nodo4"->"nodo5"; 
+"nodo6"[label="Variable: a"]; 
+"nodo5"->"nodo6"; 
+"nodo7"[label="Variable: b"]; 
+"nodo5"->"nodo7"; 
+}

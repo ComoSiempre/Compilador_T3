@@ -6,6 +6,9 @@
 package ast;
 
 import java.util.ArrayList;
+import semanticVisitor.ExtendedGrapherVisitor;
+import semanticVisitor.ScopeAnalisisVisitor;
+import semanticVisitor.TypeCheckVisitor;
 import syntaxVisitor.GrapherVisitor;
 
 /**
@@ -50,16 +53,22 @@ public class FunDec extends Nodo implements visitaNodo {
     public String toGrapher(int contNodos){
         return "\"nodo"+contNodos+"\"[label=\"Funcion: "+this.ID+","+this.tipoIDFuntion+"\"]; \n";
     }
-    public ArrayList<Nodo> getListaParametros(){
-        return this.listaParametros;
-    }
+    
     
     //metodos GET.
     
     public Nodo getCompound(){
         return this.compound_stmt;
     }
-    
+    public String getID(){
+        return this.ID;
+    }
+    public String getTipoIDFuntion(){
+        return this.tipoIDFuntion;
+    }
+    public ArrayList<Nodo> getListaParametros(){
+        return this.listaParametros;
+    }
     //metodods SET.
     
     public void setID(String ID){
@@ -74,6 +83,21 @@ public class FunDec extends Nodo implements visitaNodo {
     @Override
     public void aceptar(GrapherVisitor v) {
         v.visitar(this);
+    }
+
+    @Override
+    public void aceptar(ScopeAnalisisVisitor s) {
+       s.visitar(this);
+    }
+
+    @Override
+    public void aceptar(TypeCheckVisitor t) {
+        t.visitar(this);
+    }
+
+    @Override
+    public void aceptar(ExtendedGrapherVisitor v2) {
+        v2.visitar(this);
     }
     
 }
