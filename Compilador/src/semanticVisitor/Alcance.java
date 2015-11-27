@@ -14,16 +14,15 @@ import java.util.Hashtable;
  * @author Jonathan Vasquez - Eduardo Tapia
  */
 public class Alcance {
-    int numeroAlcance; //numero actual del alcance, servira para el orden en pila.
+    private int numeroAlcance; //numero actual del alcance, servira para el orden en pila.
     //tabla con todas las declaraciones en el alcance.
     //los tipos de declaraciones pueden ser: varDec, funcion, parametro, variable(para verificar operaciones).
-    ArrayList<Nodo> listaDeclaraciones;
+    ArrayList<Nodo> listaDeclaraciones = new ArrayList<>();
     
     //enlace al alcanse padre.
     private Alcance padre=null;
     
     public Alcance(){
-        this.listaDeclaraciones = new ArrayList<>();
     }
     
     public Alcance(int numAlcance, Alcance padre){
@@ -36,7 +35,7 @@ public class Alcance {
      * @return TRUE: exito en ingreso, FALSE: existe duplicado en el alcanse (sin exito).
      */
     public boolean insertarDeclaracion(Nodo nodo){
-        if(nodo == null) return false;
+        
         //Se verifica si existe el simbolo declarado en algun alcanse anidado a este. (ojo cuando el nodo es una Var).
         boolean existeNodo = existeSimbolo(nodo);
         if(existeNodo) return false; //la declaracion esta duplicada.
@@ -59,16 +58,20 @@ public class Alcance {
         //ciclo que ayudara a verificar uno a uno los parametros.
         for(int i=0; i<= nodo1.getListaParametros().size(); i++){
             //verifico que los paramtros corresponden a parametros VOID.
-            if(((Param)nodo1.getListaParametros().get(i)).getTipoParametro().equalsIgnoreCase("void")){
-                
-                if(((Param)nodo2.getListaParametros().get(i)).getTipoParametro().equalsIgnoreCase("void")){
-                    return true; //listas de igual tamaño e igual parametro.
+            if(nodo1.getParametroVoid()){
+                if(nodo2.getParametroVoid()){
+                    //corresnpponden a dos funciones de parametros VOID.
+                    return true;
                 }else{
-                    return false; //listas distintas.
+                    //correponden a una funcion con parametro void y otra con parametros normales.
+                    return false;
                 }
-                
+            }else if(nodo2.getParametroVoid()){
+                //corresponde a una funcion con parametros normales y la otra con parametros VOID.
+                return false;
             }
-                       
+            
+            //ya verificado la no existencia de parametros void, que analiza la lista de parametros de las funciones.
             //verifico los parametros segun su ID, tipo.
             if(((Param)nodo1.getListaParametros().get(i)).getIDParametro().equals(((Param)nodo2.getListaParametros().get(i)).getIDParametro()) &&
                     ((Param)nodo1.getListaParametros().get(i)).getTipoParametro() == ((Param)nodo2.getListaParametros().get(i)).getTipoParametro() &&
@@ -143,8 +146,30 @@ public class Alcance {
         }//fin FOR.
         return false;
     }//fin funcion 'existeSimbolo' 
+    /**
+     * metodo usado para la impresion de declaraciones del alcance. solo para uso de desarrollo.
+     */
+    public void imprimirDeclaraciones() {
+        for (Nodo nodo : this.listaDeclaraciones) {
+            if (nodo instanceof VarDec) {
+                System.out.println(((VarDec) nodo).getID() + " :: " + ((VarDec) nodo).getTipoID());
+            }
+            if (nodo instanceof FunDec) {
+                System.out.println(((FunDec) nodo).getID() + " * " + ((FunDec) nodo).getTipoIDFuntion());
+            }
+            if (nodo instanceof Param) {
+                if (((Param) nodo).getTipoParametro().equalsIgnoreCase("void")) {
+                    System.out.println("Parametro->" + ((Param) nodo).getTipoParametro());
+                } else {
+                    System.out.println("Parametro->" + ((Param) nodo).getIDParametro() + " :: " + ((Param) nodo).getTipoParametro());
+                }
+                if (((Param) nodo).isEsParamVector()) {
+                    System.out.println("Parametro->" + ((Param) nodo).getIDParametro() + " || " + ((Param) nodo).getTipoParametro() + "[]");
+                }
+            }
+        }
 
-    
+    }
     
     
     /**
@@ -159,5 +184,19 @@ public class Alcance {
      */
     public void setPadre(Alcance padre) {
         this.padre = padre;
+    }
+
+    /**
+     * @return the numeroAlcance
+     */
+    public int getNumeroAlcance() {
+        return numeroAlcance;
+    }
+
+    /**
+     * @param numeroAlcance the numeroAlcance to set
+     */
+    public void setNumeroAlcance(int numeroAlcance) {
+        this.numeroAlcance = numeroAlcance;
     }
 }

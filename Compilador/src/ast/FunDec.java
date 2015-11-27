@@ -21,8 +21,8 @@ public class FunDec extends Nodo implements visitaNodo {
     Nodo compound_stmt; //variable nodo que guarda los compomentes dentro de la funcion.
     String ID; //variable que guarda el nombre de la funcion.
     String tipoIDFuntion; //variable que guarda el tipo de la funcion.
-    boolean parametroVoid=false;//variable flag que detecta si la funcion no tiene parametros (VOID)
-    
+    private boolean parametroVoid=false;//variable flag que detecta si la funcion no tiene parametros (VOID)
+    private boolean tieneReturn=true; //variable que verifica que la funcion tiene un return;
     /**
      * metodo constructor default.
      */
@@ -98,6 +98,34 @@ public class FunDec extends Nodo implements visitaNodo {
     @Override
     public void aceptar(ExtendedGrapherVisitor v2) {
         v2.visitar(this);
+    }
+
+    /**
+     * @return the tieneReturn
+     */
+    public boolean getTieneReturn() {
+        return tieneReturn;
+    }
+
+    /**
+     * @param tieneReturn the tieneReturn to set
+     */
+    public void setTieneReturn(boolean tieneReturn) {
+        this.tieneReturn = tieneReturn;
+    }
+
+    /**
+     * @return the parametroVoid
+     */
+    public boolean getParametroVoid() {
+        return parametroVoid;
+    }
+
+    /**
+     * @param parametroVoid the parametroVoid to set
+     */
+    public void setParametroVoid(boolean parametroVoid) {
+        this.parametroVoid = parametroVoid;
     }
     
 }

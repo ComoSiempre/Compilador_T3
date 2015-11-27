@@ -14,6 +14,8 @@ import ast.*;
 parser code{:
 
     public String cadena = " "; /* contiene la cadena de producciones */
+    //variable usada para verificar la existencia de return en las funciones de tipo int.
+    public boolean flagReturn=false;
 
     public void report_fatal_error(String message, Object info) {
         report_error(message, info);
@@ -188,7 +190,11 @@ fun_declaration     ::= type_specifier:ts ID:id PARENT_IZQ params:ps PARENT_DER 
                                 //ingreso la fila de la declaracion de la funcion.
                                 ps.setFila(idleft+1);
                                 //ingreso la columna de la declaracion de funcion.
-                                ps.setColumna(idright+1);    
+                                ps.setColumna(idright+1);
+                                //ingreso flag de existencia de return en la funcion.
+                                ((FunDec) ps).setTieneReturn(this.parser.flagReturn);
+                                //reseteo el flag.
+                                this.parser.flagReturn=false;
                                 //condicionante usado si los componentes existen o no.
                                 if(cs != null){
                                     ((FunDec) ps).setCompound_stmt(cs);
@@ -366,12 +372,15 @@ for_stmt            ::= FOR PARENT_IZQ expression:e1 COMA expression:e2 COMA exp
 return_stmt         ::= RETURN PUNTOCOMA 
                             {:
                                 this.parser.cadena = "return ::= RETURN SEMICOLON \n"+this.parser.cadena;
+                                //flag de return como true.
+                                this.parser.flagReturn=true;
                                 RESULT=new Statement("return");
                                 
                             :}
                         | RETURN expression:e PUNTOCOMA 
                             {:
                                 this.parser.cadena = "return ::= RETURN expression SEMICOLON \n"+this.parser.cadena;
+                                this.parser.flagReturn=true;
                                 RESULT=new Statement("return",e);
                             :};
 

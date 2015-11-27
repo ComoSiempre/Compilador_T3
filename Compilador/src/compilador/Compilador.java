@@ -18,6 +18,7 @@ import java.util.Scanner;
 import java_cup.runtime.Symbol;
 import parser.*;
 import scanner.*;
+import semanticVisitor.ScopeAnalisisVisitor;
 import syntaxVisitor.GrapherVisitor;
 
 
@@ -128,15 +129,7 @@ public class Compilador {
         }
 	
     }//fin metodo move.
-    /**
-     * metodo de separa el path de los ejercicion y obtiene solo el nombre del ejercicio.
-     * @param pathEj direccion del ejercicio.
-     * @return el nombre del ejercicio. ej: c:/...../ejercicio_1.txt  --->  ejercicio_1.txt
-     */
-    private static String getNombreEjercicio(String pathEj){
-        String [] delimitador=pathEj.split("/");
-        return delimitador[delimitador.length-1];
-    }
+    
     /**
      * metodo encargado de recorrer, detectar y guardar los literales a la tabla de literales.
      * @param lex Clase lexer donde esta el conjunto de simbolos segun el ejercicio.
@@ -185,6 +178,8 @@ public class Compilador {
         File arch = new File(pathEjercicio);
         
         try{
+            //generacion de la tabla de simbolos.
+            SymbolTable tablaSimbolos = new SymbolTable();
             //generacion analisis lexico del ejercicio.
             Lexer lexer = new Lexer(new FileReader(arch));
             //ingreso los literales usados a la tabla de literales.
@@ -197,7 +192,13 @@ public class Compilador {
             GrapherVisitor grapher = new GrapherVisitor(pathBase,numEjercicio);
             //se inicia el recorrido del AST para la generacion de la imagen del arbol utilizando el patron visitor.
             grapher.visitar(programa);
-            
+            //cracion de nuevo objeto GrapherVisitor para pa generacion del AST mejorado.
+            //ExtendedGrapherVisitor grapher2 = new ExtendedGrapherVisitor();
+            //generacion primer recorrido semantico.
+            ScopeAnalisisVisitor sp1 = new ScopeAnalisisVisitor();
+            sp1.visitar(programa);
+            sp1.imprimirTablaSimbolos();
+            //generacion segundo recorrido semantico.
         }catch(Exception ex){
             ex.printStackTrace();
             
@@ -217,20 +218,20 @@ public class Compilador {
             System.out.println("***********************Taller 2: Analisis Sintactico *******************************");
             System.out.println("************************************************************************************");
             System.out.println("************************************************************************************");
-            System.out.println("1.- Ejercicio_1.txt");
-            System.out.println("2.- Ejercicio_2.txt");
-            System.out.println("3.- Ejercicio_3.txt");
-            System.out.println("4.- Ejercicio_4.txt");
-            System.out.println("5.- Ejercicio_5.txt");
-            System.out.println("6.- Ejercicio_6.txt");
-            System.out.println("7.- Ejercicio_7.txt");
+            System.out.println("1.- Ejercicio_1.ks");
+            System.out.println("2.- Ejercicio_2.ks");
+            System.out.println("3.- Ejercicio_3.ks");
+            System.out.println("4.- Ejercicio_4.ks");
+            System.out.println("5.- Ejercicio_5.ks");
+            System.out.println("6.- Ejercicio_6.ks");
+            System.out.println("7.- Ejercicio_7.ks");
             System.out.println("8.- Salir");
             System.out.println("Seleccionar un ejercicio a compilar:");
             sel = in.nextLine();
             char[] s = sel.toCharArray();
             switch(s[0]){
                 case '1':
-                    compilar(dir+"/P1_AllSyntax.ks",dir,1);
+                    compilar(dir+"/ejercicio_1.ks",dir,1);
                     break;
                 case '2':
                     compilar(dir+"/P2_Prec-Asoc-Stmt.ks",dir,2);

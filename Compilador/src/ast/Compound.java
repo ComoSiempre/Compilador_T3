@@ -74,4 +74,11 @@ public class Compound extends Nodo implements visitaNodo {
         v2.visitar(this);
     }
     
+    public boolean estaVacio(){
+        if(this.listaLocalVar.isEmpty() && this.listaStatements.isEmpty()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
