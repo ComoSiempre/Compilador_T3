@@ -170,7 +170,13 @@ public class Alcance {
         }
 
     }
-    
+    /**
+     * metodo que retorna el tamaño de la lista de declaraciones.
+     * @return tamaño de la lista.
+     */
+    public int getTamañoLista(){
+        return this.listaDeclaraciones.size();
+    }
     
     /**
      * @return the padre

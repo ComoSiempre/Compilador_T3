@@ -127,5 +127,7 @@ public class FunDec extends Nodo implements visitaNodo {
     public void setParametroVoid(boolean parametroVoid) {
         this.parametroVoid = parametroVoid;
     }
+
+    
     
 }

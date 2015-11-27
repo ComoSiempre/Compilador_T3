@@ -7,5 +7,12 @@ void ordenar(void) {
         }
         {
         	int f;
+        	{
+        		int d;
+        	}
         }
+}
+
+void main(int g){
+	int jl;
 }

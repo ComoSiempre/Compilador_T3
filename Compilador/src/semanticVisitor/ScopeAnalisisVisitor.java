@@ -31,7 +31,9 @@ public class ScopeAnalisisVisitor implements visitor {
     //pila auxiliar para guardar los alcances que son eliminados en el recorrido en la tabla de simbolos.
     //al final del recorrido, se tomaran todos los alcances del auxiliar y se asignaran a la tabla de contenidos.
     Stack<Alcance> pilaAux = new Stack<>();
-    //variable auxiliar que guardara al padre.
+    //lista de parametros auxiliar que es usado para guardar los paramentros de funcion y resolver el problema.
+    //de alcence de bloques.
+    ArrayList<Nodo> listaParam = new ArrayList<>();
     
     
     public ScopeAnalisisVisitor(){
@@ -111,7 +113,7 @@ public class ScopeAnalisisVisitor implements visitor {
             System.exit(0);//termino el proceso de compilacion.
         }
         //creo un nuevo alcance, el del interior de la funcion.
-        this.tablaSimbolos.pushScope(this.tablaSimbolos.getTabla().peek());
+        //this.tablaSimbolos.pushScope(this.tablaSimbolos.getTabla().peek());
         
         //se visitan los parametros.
         for(Nodo nodo : function.getListaParametros()){
@@ -126,7 +128,6 @@ public class ScopeAnalisisVisitor implements visitor {
             System.err.println("Error Semantico!. Fila: "+function.getFila()+", Columna: "+function.getColumna()+".\nLa funcion "+function.getID()+" no tiene retorno.");
             System.exit(0);//termino el proceso de compilacion.
         }
-        
         //ya visitado el componente y sus variables locales, se elimina el alcance de la pila.
         Alcance scopeEliminado = this.tablaSimbolos.popScope();
         //se guarda el alcance eliminado a la pila auxiliar.
@@ -140,25 +141,84 @@ public class ScopeAnalisisVisitor implements visitor {
     @Override
     public void visitar(Param parametro) {
         //se ingresa el parametro al alcance.
-        boolean result = this.tablaSimbolos.insertSymbol(parametro);
-        
+        //boolean result = this.tablaSimbolos.insertSymbol(parametro);
+        //se ingresa a la lista auxiliar.
+        this.listaParam.add(parametro);
     }
 
     @Override
     public void visitar(Compound componente) {
-        //creo un nuevo alcance.
-        //this.tablaSimbolos.pushScope(this.tablaSimbolos.getTabla().peek());
+        //creo un nuevo alcance, puede ser alcance de bloque o de funcion, pero un alcance obligado.
+        this.tablaSimbolos.pushScope(this.tablaSimbolos.getTabla().peek());
+        //variable que guarda el ultimo nodo ingresado el en alcance padre, sera usado para saber si este nodo es una funcion void.
+        int tamañoL = this.tablaSimbolos.getTabla().peek().getPadre().getTamañoLista();
+        Nodo ultimoIngreso = this.tablaSimbolos.getTabla().peek().getPadre().listaDeclaraciones.get(tamañoL-1);
         
-        //visito los nodos de variables locales.
-        for(Nodo nodo : componente.getLocalVar()){
-            nodo.aceptar(this);
-        }
-        //visito los nodos de sentencias.
-        for(Nodo nodo : componente.getStatements()){
-            nodo.aceptar(this);
-            
+        if(ultimoIngreso instanceof FunDec){
+            //aqui ya se que es un comund de funcion.
+            for(Nodo param : this.listaParam) this.tablaSimbolos.insertSymbol(param);
+            //al utilizar el auxiliar, limpio la lista para nuevo uso futuro.
+            this.listaParam.clear();
+            //visito los nodos de variables locales.
+            for (Nodo nodo : componente.getLocalVar()) {
+                nodo.aceptar(this);
+            }
+            //visito los nodos de sentencias.
+            for (Nodo nodo : componente.getStatements()) {
+                nodo.aceptar(this);
+
+            }
+        }else{
+            //compound de bloque.
+            //visito los nodos de variables locales.
+            for (Nodo nodo : componente.getLocalVar()) {
+                nodo.aceptar(this);
+            }
+            //visito los nodos de sentencias.
+            for (Nodo nodo : componente.getStatements()) {
+                nodo.aceptar(this);
+
+            }
+            //al terminar la visitas del bloque, se elimina el alcance de este.
+            Alcance scopeEliminado = this.tablaSimbolos.popScope();
+            //se guarda el alcance eliminado a la pila auxiliar.
+            this.pilaAux.push(scopeEliminado);
         }
         
+
+//        //pregunto si la lista de parametros auxiliar esta vacia, asi se sabra si es un bloque de funcion o independiente de esta.
+//        if(this.listaParam.isEmpty() && ultimoIngreso instanceof FunDec && ((FunDec)ultimoIngreso).getParametroVoid()){
+//            
+//            //visito los nodos de variables locales.
+//            for (Nodo nodo : componente.getLocalVar()) {
+//                nodo.aceptar(this);
+//            }
+//            //visito los nodos de sentencias.
+//            for (Nodo nodo : componente.getStatements()) {
+//                nodo.aceptar(this);
+//
+//            }
+//            //al terminar la visitas del bloque, se elimina el alcance de este.
+//            Alcance scopeEliminado = this.tablaSimbolos.popScope();
+//            //se guarda el alcance eliminado a la pila auxiliar.
+//            this.pilaAux.push(scopeEliminado);
+//            
+//        }else{
+//            //al no estar vacia, concluyo que es un bloque de funcion (por recorrido del arbol, si se visito
+//            //parametros anteriormente deberia estar todods esos parametros en el auxiliar).
+//            for(Nodo param : this.listaParam) this.tablaSimbolos.insertSymbol(param);
+//            //al utilizar el auxiliar, limpio la lista para nuevo uso futuro.
+//            this.listaParam.clear();
+//            //visito los nodos de variables locales.
+//            for (Nodo nodo : componente.getLocalVar()) {
+//                nodo.aceptar(this);
+//            }
+//            //visito los nodos de sentencias.
+//            for (Nodo nodo : componente.getStatements()) {
+//                nodo.aceptar(this);
+//
+//            }
+//        }
     }
 
     @Override

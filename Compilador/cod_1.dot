@@ -16,4 +16,16 @@ digraph G {
 "nodo3"->"nodo7"; 
 "nodo8"[label="f:INT"]; 
 "nodo7"->"nodo8"; 
+"nodo9"[label="Compound Statement", color=deepskyblue]; 
+"nodo7"->"nodo9"; 
+"nodo10"[label="d:INT"]; 
+"nodo9"->"nodo10"; 
+"nodo11"[label="Funcion: main,void"]; 
+"nodo0"->"nodo11"; 
+"nodo12"[label="Param[g,int]"]; 
+"nodo11"->"nodo12"; 
+"nodo13"[label="Compound Statement", color=deepskyblue]; 
+"nodo11"->"nodo13"; 
+"nodo14"[label="jl:INT"]; 
+"nodo13"->"nodo14"; 
 }
