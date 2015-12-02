@@ -20,12 +20,18 @@ digraph G {
 "nodo7"->"nodo9"; 
 "nodo10"[label="d:INT"]; 
 "nodo9"->"nodo10"; 
-"nodo11"[label="Funcion: main,void"]; 
+"nodo11"[label="Funcion: output,void"]; 
 "nodo0"->"nodo11"; 
-"nodo12"[label="Param[g,int]"]; 
+"nodo12"[label="Param[x,int]"]; 
 "nodo11"->"nodo12"; 
 "nodo13"[label="Compound Statement", color=deepskyblue]; 
 "nodo11"->"nodo13"; 
-"nodo14"[label="jl:INT"]; 
-"nodo13"->"nodo14"; 
+"nodo14"[label="Funcion: main,void"]; 
+"nodo0"->"nodo14"; 
+"nodo15"[label="Param[g,int]"]; 
+"nodo14"->"nodo15"; 
+"nodo16"[label="Compound Statement", color=deepskyblue]; 
+"nodo14"->"nodo16"; 
+"nodo17"[label="jl:INT"]; 
+"nodo16"->"nodo17"; 
 }

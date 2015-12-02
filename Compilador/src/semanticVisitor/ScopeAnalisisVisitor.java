@@ -77,6 +77,7 @@ public class ScopeAnalisisVisitor implements visitor {
         //primer alcance.
         //ingreso el alcance a la tabla de simbolos.
         this.tablaSimbolos.pushScope(null);
+        
         //recorro el AST.
         ArrayList<Nodo> listaDec = program.getDeclaraciones();
         for(Nodo dec : listaDec){
@@ -185,40 +186,6 @@ public class ScopeAnalisisVisitor implements visitor {
             this.pilaAux.push(scopeEliminado);
         }
         
-
-//        //pregunto si la lista de parametros auxiliar esta vacia, asi se sabra si es un bloque de funcion o independiente de esta.
-//        if(this.listaParam.isEmpty() && ultimoIngreso instanceof FunDec && ((FunDec)ultimoIngreso).getParametroVoid()){
-//            
-//            //visito los nodos de variables locales.
-//            for (Nodo nodo : componente.getLocalVar()) {
-//                nodo.aceptar(this);
-//            }
-//            //visito los nodos de sentencias.
-//            for (Nodo nodo : componente.getStatements()) {
-//                nodo.aceptar(this);
-//
-//            }
-//            //al terminar la visitas del bloque, se elimina el alcance de este.
-//            Alcance scopeEliminado = this.tablaSimbolos.popScope();
-//            //se guarda el alcance eliminado a la pila auxiliar.
-//            this.pilaAux.push(scopeEliminado);
-//            
-//        }else{
-//            //al no estar vacia, concluyo que es un bloque de funcion (por recorrido del arbol, si se visito
-//            //parametros anteriormente deberia estar todods esos parametros en el auxiliar).
-//            for(Nodo param : this.listaParam) this.tablaSimbolos.insertSymbol(param);
-//            //al utilizar el auxiliar, limpio la lista para nuevo uso futuro.
-//            this.listaParam.clear();
-//            //visito los nodos de variables locales.
-//            for (Nodo nodo : componente.getLocalVar()) {
-//                nodo.aceptar(this);
-//            }
-//            //visito los nodos de sentencias.
-//            for (Nodo nodo : componente.getStatements()) {
-//                nodo.aceptar(this);
-//
-//            }
-//        }
     }
 
     @Override
@@ -229,12 +196,11 @@ public class ScopeAnalisisVisitor implements visitor {
 
     @Override
     public void visitar(Var var) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void visitar(Call call) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

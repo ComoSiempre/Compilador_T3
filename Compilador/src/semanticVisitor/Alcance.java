@@ -87,10 +87,32 @@ public class Alcance {
      * @return TRUE: existe el simbolo en alcance, FALSE: no existe el simbolo en el alcance.
      */
     private boolean existeSimbolo(Nodo nodoEvaluacion){
+        //primero verifico que el nodo sea una funcion, si lo es verifico q no sea una funcion global
+        //imput u output.
+        if(nodoEvaluacion instanceof FunDec){
+            if(((FunDec) nodoEvaluacion).getTipoIDFuntion().equalsIgnoreCase("int")
+                    && ((FunDec) nodoEvaluacion).getID().equalsIgnoreCase("input")
+                    && ((FunDec) nodoEvaluacion).getParametroVoid()){
+                return true; //no se puede ingresar porque es la funcion glabal "input".
+            }
+            if(((FunDec) nodoEvaluacion).getTipoIDFuntion().equalsIgnoreCase("void")
+                    && ((FunDec) nodoEvaluacion).getID().equalsIgnoreCase("output")
+                    && !((FunDec) nodoEvaluacion).getParametroVoid()
+                    && ((FunDec) nodoEvaluacion).getListaParametros().size()==1){
+                //verifico que el parametro dentro no tenga tipo int.
+                Nodo parametro = ((FunDec)nodoEvaluacion).getListaParametros().get(0);
+                if(((Param)parametro).getTipoParametro().equalsIgnoreCase("int"))
+                    return true; //no se puede ingresar porque es la funcion global "output".
+            }
+        }
+        //ya verificado que el nodo a ingresar no corresponde a una funcion global clave, se comienza
+        //el proceso de verificacion.
+        
         //recorro la lista de declaraciones.
         for(Nodo nodo : this.listaDeclaraciones){
             //si se verifican funciones.
             if(nodo instanceof FunDec && nodoEvaluacion instanceof FunDec){
+                
                 //se analizan sus nombres, tipos, y listas de parametros.
                 if(((FunDec)nodo).getID().equals(((FunDec)nodoEvaluacion).getID()) &&
                         ((FunDec)nodo).getTipoIDFuntion().equals(((FunDec)nodoEvaluacion).getTipoIDFuntion())){
