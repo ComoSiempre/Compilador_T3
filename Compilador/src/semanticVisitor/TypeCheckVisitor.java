@@ -49,6 +49,16 @@ public class TypeCheckVisitor implements visitor {
 
     @Override
     public void visitar(Expression expresion) {
+        //relizar comparacion tipos
+        // agregar tipos a nodos a Nodo Tipo.
+        //  inorden
+        /* Donde se agregaran los tipos de datos...  basasrse en el grapher visitor
+        no se necesita visitar todos los nodos,
+        
+        revisar nodos en parser.
+        errores semanticos---> system(0)
+        */
+        //if (expresion.getTipo)
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
