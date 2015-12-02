@@ -57,6 +57,7 @@ public class TypeCheckVisitor implements visitor {
         
         revisar nodos en parser.
         errores semanticos---> system(0)
+        declarar tabla de simbolos como una instancia en la clase 
         */
         //if (expresion.getTipo)
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
