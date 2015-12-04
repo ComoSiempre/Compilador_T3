@@ -69,10 +69,13 @@ public class SymbolTable {
     
     /**
      * metodo que encuentra que elemento corresponde un nombre.
+     * @param nombre
      * @return 
      */
-    public boolean lookupSymbol(String nombre){
-        return true;
+    public String lookupSymbol(String nombre){
+        Alcance actual =this.ts.peek();
+        return actual.buscaSimbolo(nombre);
+                
     }
 
     /**
