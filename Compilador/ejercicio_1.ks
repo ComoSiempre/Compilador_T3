@@ -12,9 +12,6 @@ void ordenar(void) {
         	}
         }
 }
-void  output(int x){
-        
-}
 
 void main(int g){
 	int jl;
