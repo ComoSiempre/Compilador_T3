@@ -11,6 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Stack;
+import javax.sound.midi.SysexMessage;
 import visitor.visitor;
 
 /**
@@ -53,7 +54,14 @@ public class GrapherVisitor implements visitor {
             String tParam = "-Tpng";
             String tOParam = "-o";
             String [] cmd = new String[5];//variable para guardar el codigo en consola.
-            cmd[0] = dotPath;
+            
+            // para que funcione en linux
+            if(System.getProperty("os.name").equalsIgnoreCase("linux")){
+                cmd[0] = "dot";
+            }else{
+                cmd[0] = dotPath;
+            }
+            
             cmd[1] = tParam;
             cmd[2] = fileInputPath;
             cmd[3] = tOParam;
