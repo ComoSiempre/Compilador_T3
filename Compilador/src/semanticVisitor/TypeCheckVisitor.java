@@ -5,6 +5,7 @@
  */
 package semanticVisitor;
 
+import Tables.SymbolTable;
 import ast.Call;
 import ast.Compound;
 import ast.Expression;
@@ -22,6 +23,19 @@ import visitor.*;
  */
 public class TypeCheckVisitor implements visitor {
 
+    
+    
+    SymbolTable tablaSimbolos;
+    /**
+     * Constructor
+     * Declaración de instancia de la tabla de symbolos para ubicar los tipos   
+     */
+    public TypeCheckVisitor() {
+     
+        this.tablaSimbolos = SymbolTable.instancia;
+    }
+    
+    
     @Override
     public void visitar(Program program) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -60,7 +74,24 @@ public class TypeCheckVisitor implements visitor {
         declarar tabla de simbolos como una instancia en la clase 
         */
         //if (expresion.getTipo)
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(expresion.getEsComparacion()){
+           String tipo1 = null;
+           String tipo2 = null;
+           if(expresion.getOperador1() instanceof Var){
+               Var var = (Var)expresion.getOperador1();
+               tipo1 = this.tablaSimbolos.lookupSymbol(var.getID());
+           }
+           
+           if(expresion.getOperador2() instanceof Var){
+              Var var = (Var)expresion.getOperador2();
+              tipo2 = this.tablaSimbolos.lookupSymbol(var.getID());
+           }
+           if(tipo1 == null ? tipo2 != null : !tipo1.equals(tipo2)){
+               System.err.println("Error semantico ");
+           } else {
+           }
+        }
+        
     }
 
     @Override
