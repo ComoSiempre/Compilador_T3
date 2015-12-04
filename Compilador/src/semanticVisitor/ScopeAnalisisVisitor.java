@@ -304,7 +304,7 @@ public class ScopeAnalisisVisitor implements visitor {
             
         }else{
             //seria RETURN ;
-            
+            this.vieneDeIfELSE=false;
         }
     }
     
