@@ -270,8 +270,9 @@ public class Compilador {
         //variable donde obtengo la direccion del proyecto.
         final String dir =System.getProperty("user.dir");
         //variable usada para guardar la direccion del archivo .flex
-        String pathFlex=dir+"\\src\\scanner\\Lexer.flex";
-        String pathParser=dir+"\\src\\parser\\Parser.cup";
+        
+        String pathFlex=dir+System.getProperty("file.separator")+"src"+System.getProperty("file.separator")+"scanner"+System.getProperty("file.separator")+"Lexer.flex";
+        String pathParser=dir+System.getProperty("file.separator")+"src"+System.getProperty("file.separator")+"parser"+System.getProperty("file.separator")+"Parser.cup";
         
         //se llama a la funcion de generacion de lexer. 
         generarLexer(pathFlex);
