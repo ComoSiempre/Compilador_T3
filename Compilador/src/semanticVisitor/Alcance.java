@@ -168,6 +168,53 @@ public class Alcance {
         }//fin FOR.
         return false;
     }//fin funcion 'existeSimbolo' 
+    
+    
+    /**
+     * Retorna el tipo de dato en la tabla de simbolos dado un Id
+     * Se asume que se ha verificado que existe el id en la tabla de simbolos
+     * @param id
+     * @return 
+     */
+    public String buscaSimbolo(String id){
+        
+        //recorro la lista de declaraciones.
+        for(Nodo nodo : this.listaDeclaraciones){
+            //se verifican funciones.
+            if(nodo instanceof FunDec){
+                
+                //se analizan sus nombres, tipos, y listas de parametros.
+                if(((FunDec)nodo).getID().equalsIgnoreCase(id)){
+                    //retorna el tipo de la funcion.
+                    return ((FunDec)nodo).getTipoIDFuntion();
+                }
+            }
+            
+            //se verifica una declaracion de variable.
+            if(nodo instanceof VarDec){
+                //se verifica que tengan el mismo ID y Tipo.
+                if(((VarDec)nodo).getID().equalsIgnoreCase(id)){
+                    return ((VarDec)nodo).getTipoID();
+                }
+            }//fin if.
+            
+                      
+
+            //en caso de comparar una variable con un parametro de funcion.
+            if (nodo instanceof Param) {
+                //ya que no existen variables de tipo void guardados en alcance.
+                if (!((Param) nodo).getTipoParametro().equalsIgnoreCase("void")) {
+                    if (((Param) nodo).getIDParametro().equalsIgnoreCase(id)) {
+                        return "int";
+                    }
+                }
+            }//fin IF.
+        }//fin FOR.
+        System.err.println("Error no se encuentra tipo para: "+ id+ " ");
+        return null; 
+    }//fin funcion 'buscaSimbolo'
+    
+    
     /**
      * metodo usado para la impresion de declaraciones del alcance. solo para uso de desarrollo.
      */
