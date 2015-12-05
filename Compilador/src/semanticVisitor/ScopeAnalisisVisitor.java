@@ -167,6 +167,7 @@ public class ScopeAnalisisVisitor implements visitor {
         //sera usado para saber si este nodo es una funcion void.
         int tamañoL = this.tablaSimbolos.getTabla().peek().getPadre().getTamañoLista();
         
+        
         Nodo ultimoIngreso = this.tablaSimbolos.getTabla().peek().getPadre().listaDeclaraciones.get(tamañoL-1);
         
         if(ultimoIngreso instanceof FunDec){
