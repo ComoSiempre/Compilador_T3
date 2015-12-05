@@ -237,7 +237,7 @@ public class Compilador {
                     compilar(dir+"/ejercicio_1.ks",dir,1);
                     break;
                 case '2':
-                    compilar(dir+"/P2_Prec-Asoc-Stmt.ks",dir,2);
+                    compilar(dir+"/ejercicio_2.ks",dir,2);
                     break;
                 case '3':
                     compilar(dir+"/Codigos_de_Prueba/testVarNoInicializada.ks",dir,3);
@@ -253,6 +253,57 @@ public class Compilador {
                     break;
                 case '7':
                     compilar(dir+"/ejemplo_7.txt",dir,7);
+                    break;
+                case '8':
+                    flag=false;
+                    break;
+                default:
+                    System.out.println("Seleccionar un ejemplo valido:");
+                    break;
+            }//fin switch.
+        }while(flag);
+        
+    }//fin metodo 'menu'
+    
+    public static void menuBrian(String dir, Scanner in) throws IOException{
+        boolean flag=true;
+        String sel="";
+        do{
+            System.out.println("***********************Taller 2: Analisis Sintactico *******************************");
+            System.out.println("---------------------------EJERCICIOS DE PRUEBA-------------------------------------");
+            System.out.println("************************************************************************************");
+            System.out.println("1.- C1_ArrayExample.ks");
+            System.out.println("2.- C2_Factorial.ks");
+            System.out.println("3.- C3_PrintNTimes.ks");
+            System.out.println("4.- I1_SelectionSort.ks");
+            System.out.println("5.- I2_WrongParameters.ks");
+            System.out.println("6.- I3_WrongReturn.ks");
+            System.out.println("7.- I4_UndefFunction.ks");
+            System.out.println("8.- Salir");
+            System.out.println("Seleccionar un ejercicio a compilar:");
+            sel = in.nextLine();
+            char[] s = sel.toCharArray();
+            switch(s[0]){
+                case '1':
+                    compilar(dir+"/Codigos_de_Prueba/C1_ArrayExample.ks",dir,1);
+                    break;
+                case '2':
+                    compilar(dir+"/Codigos_de_Prueba/C2_Factorial.ks",dir,2);
+                    break;
+                case '3':
+                    compilar(dir+"/Codigos_de_Prueba/C3_PrintNTimes.ks",dir,3);
+                    break;
+                case '4':
+                    compilar(dir+"/Codigos_de_Prueba/I1_SelectionSort.ks",dir,4);
+                    break;
+                case'5':
+                    compilar(dir+"/Codigos_de_Prueba/I2_WrongParameters.ks",dir,5);
+                    break;
+                case '6':
+                    compilar(dir+"/Codigos_de_Prueba/I3_WrongReturn.ks",dir,6);
+                    break;
+                case '7':
+                    compilar(dir+"/Codigos_de_Prueba/I4_UndefFunction.ks",dir,7);
                     break;
                 case '8':
                     flag=false;

@@ -163,7 +163,8 @@ public class ScopeAnalisisVisitor implements visitor {
             this.tablaSimbolos.pushScope(this.tablaSimbolos.getTabla().peek());
         }
         
-        //variable que guarda el ultimo nodo ingresado el en alcance padre, sera usado para saber si este nodo es una funcion void.
+        //variable que guarda el ultimo nodo ingresado el en alcance padre, 
+        //sera usado para saber si este nodo es una funcion void.
         int tamañoL = this.tablaSimbolos.getTabla().peek().getPadre().getTamañoLista();
         
         Nodo ultimoIngreso = this.tablaSimbolos.getTabla().peek().getPadre().listaDeclaraciones.get(tamañoL-1);
@@ -180,7 +181,6 @@ public class ScopeAnalisisVisitor implements visitor {
             //visito los nodos de sentencias.
             for (Nodo nodo : componente.getStatements()) {
                 nodo.aceptar(this);
-
             }
             //no agrego eliminacion, ya que esta en la visita de la funcion.
         }else{
@@ -222,7 +222,7 @@ public class ScopeAnalisisVisitor implements visitor {
         //condicionantes usadas para la visita dependiento del tipo de declaracion.
         if(stmt.getTipoDeclaracion().equalsIgnoreCase("if") && stmt.getDeclaracion_else() == null){
             this.vieneDeIfELSE=false;
-
+            this.padreIF_ELSE=null;
             //el nodo corresponde a un nodo de IF.
             stmt.getExpresion().aceptar(this);
             
@@ -264,12 +264,15 @@ public class ScopeAnalisisVisitor implements visitor {
                 //con las visitas ya hechas, se eliminan los alcances.
                 //se guarda el alcance eliminado en la pila axuiliar
             }
-            
+            //reseteo los flag.
+            this.vieneDeIfELSE=false;
+            this.padreIF_ELSE=null;
             
                 
         }else if(stmt.getTipoDeclaracion().equalsIgnoreCase("while")){
             //el nodo corresponde a un nodo WHILE.
             this.vieneDeIfELSE=false;
+            this.padreIF_ELSE=null;
             stmt.getExpresion().aceptar(this);
             
             
@@ -285,6 +288,7 @@ public class ScopeAnalisisVisitor implements visitor {
             
         }else if(stmt.getTipoDeclaracion().equalsIgnoreCase("for")){
             this.vieneDeIfELSE=false;
+            this.padreIF_ELSE=null;
             //el nodo corresponde a un nodo FOR.
             stmt.getExpresion().aceptar(this);
             stmt.getExpresionFor2().aceptar(this);
@@ -299,12 +303,14 @@ public class ScopeAnalisisVisitor implements visitor {
             
         }else if(stmt.getTipoDeclaracion().equalsIgnoreCase("return") && stmt.getExpresion() != null){
             this.vieneDeIfELSE=false;
+            this.padreIF_ELSE=null;
             //el nodo corresponde a un nodo RETURN (gramatica 2).
             stmt.getExpresion().aceptar(this);
             
         }else{
             //seria RETURN ;
             this.vieneDeIfELSE=false;
+            this.padreIF_ELSE=null;
         }
     }
     
