@@ -1,18 +1,15 @@
 int x;
 
-void ordenar(void) {
-        int k;
-        {
-        	int g;
-        }
-        {
-        	int f;
-        	{
-        		int d;
-        	}
-        }
-}
+int y;
 
 void main(int g){
-	int jl;
+        x::=1;
+        y::=2;
+        x+y;
+        {
+        int a;
+        }
+        {
+        a::=2;
+        }
 }
