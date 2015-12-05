@@ -32,7 +32,7 @@ public class SymbolTable {
     /**
      * Metodo que entra un nuevo alcance a tabla.
      * @param scope alcance padre el cual estara ligado el nuevo alcance.
-     * @return TRUE: ingreso exitoso, FALSE: ingreso fallido.
+     * @return TRUE: ingreso exitoso, FALSE: ingreso fallido.status
      */
     public boolean pushScope(Alcance scopePadre){
         //creo el nuevo alcance a ser ingresado.
@@ -74,8 +74,12 @@ public class SymbolTable {
      */
     public String lookupSymbol(String nombre){
         Alcance actual =this.ts.peek();
-        return actual.buscaSimbolo(nombre);
-                
+        String tipo= actual.buscaSimbolo(nombre);
+        while (tipo == null){
+            actual= actual.getPadre();
+            tipo = actual.buscaSimbolo(nombre);
+        }
+        return tipo;
     }
 
     /**
@@ -125,4 +129,21 @@ public class SymbolTable {
 			this.ts.push(pilaAux.pop());
 		}
 	}
+    /**
+     * Verifica que esxista un simbolo en la tabla de simolos
+     * @param var
+     * @return 
+     */
+    public boolean lookupSymbol(Nodo var) {
+        
+        Alcance actual = this.ts.peek();
+        while(actual!=null){
+            if (actual.buscaSimbolo(var)){
+                return true;
+            }
+            actual = actual.getPadre();
+            
+        }
+        return false;
+    }
 }
