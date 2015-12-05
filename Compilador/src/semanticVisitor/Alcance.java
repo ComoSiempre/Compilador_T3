@@ -205,13 +205,15 @@ public class Alcance {
                 //ya que no existen variables de tipo void guardados en alcance.
                 if (!((Param) nodo).getTipoParametro().equalsIgnoreCase("void")) {
                     if (((Param) nodo).getIDParametro().equalsIgnoreCase(id)) {
-                        return "int";
+                        return "INT";
                     }
                 }
             }//fin IF.
         }//fin FOR.
         System.err.println("Error no se encuentra tipo para: "+ id+ " ");
+        System.exit(0);
         return null; 
+        
     }//fin funcion 'buscaSimbolo'
     
     
@@ -273,5 +275,9 @@ public class Alcance {
      */
     public void setNumeroAlcance(int numeroAlcance) {
         this.numeroAlcance = numeroAlcance;
+    }
+
+    public boolean buscaSimbolo(Nodo var) {
+       return existeSimbolo(var);
     }
 }
