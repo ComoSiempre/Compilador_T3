@@ -19,6 +19,7 @@ import java_cup.runtime.Symbol;
 import parser.*;
 import scanner.*;
 import semanticVisitor.ScopeAnalisisVisitor;
+import semanticVisitor.TypeCheckVisitor;
 import syntaxVisitor.GrapherVisitor;
 
 
@@ -199,6 +200,8 @@ public class Compilador {
             sp1.visitar(programa);
             sp1.imprimirTablaSimbolos();
             //generacion segundo recorrido semantico.
+            TypeCheckVisitor sp2 = new TypeCheckVisitor();
+            sp2.visitar(programa);
         }catch(Exception ex){
             ex.printStackTrace();
             
@@ -237,7 +240,7 @@ public class Compilador {
                     compilar(dir+"/P2_Prec-Asoc-Stmt.ks",dir,2);
                     break;
                 case '3':
-                    compilar(dir+"/ejemplo_3.txt",dir,3);
+                    compilar(dir+"/Codigos_de_Prueba/testVarNoInicializada.ks",dir,3);
                     break;
                 case '4':
                     compilar(dir+"/ejemplo_4.txt",dir,4);
