@@ -78,7 +78,7 @@ public class TypeCheckVisitor implements visitor {
 
     @Override
     public void visitar(Param parametro) {
-        parametro.aceptar(this);
+        // nada
     }
 
     @Override
