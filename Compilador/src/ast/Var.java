@@ -20,6 +20,8 @@ public class Var extends Nodo implements visitaNodo {
     String ID; //variable que guarda el nombre de la variable.
     Object Expression; //variable que guarda la posible expresion de sigue la variable (gramatica 21). o un Integer en caso de que sea un numero (gramatica 30).
     int numeroExpresion=0; //variable usada en el caso de que la expression sea un numero, gramatica 30, en este caso envez de subir el numero, se creara un NOdo var usando solo esta vairable.
+    private String tipoVar; //variable que guarda el tipo del var aal buscarlo en la tabla de simbolos. (chequeo de tipos).
+    
     /**
      * constructor 1, usado si la variable viene seguida por un nodo expression.
      * @param id nombre de la variable
@@ -116,6 +118,20 @@ public class Var extends Nodo implements visitaNodo {
     @Override
     public void aceptar(ExtendedGrapherVisitor v2) {
         v2.visitar(this);
+    }
+
+    /**
+     * @return the tipoVar
+     */
+    public String getTipoVar() {
+        return tipoVar;
+    }
+
+    /**
+     * @param tipoVar the tipoVar to set
+     */
+    public void setTipoVar(String tipoVar) {
+        this.tipoVar = tipoVar;
     }
     
 }
