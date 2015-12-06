@@ -22,6 +22,7 @@ public class Var extends Nodo implements visitaNodo {
     int numeroExpresion=0; //variable usada en el caso de que la expression sea un numero, gramatica 30, en este caso envez de subir el numero, se creara un NOdo var usando solo esta vairable.
     private String tipoVar; //variable que guarda el tipo del var aal buscarlo en la tabla de simbolos. (chequeo de tipos).
     
+    
     /**
      * constructor 1, usado si la variable viene seguida por un nodo expression.
      * @param id nombre de la variable
