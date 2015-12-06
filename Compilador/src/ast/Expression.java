@@ -229,6 +229,7 @@ public class Expression extends Nodo implements visitaNodo {
                     + "style = filled "
                     + "color = greenyellow]; \n";
         } else {
+            
             //caso contrario, corresponderia a un nodo de comparacion (LEQ, LT, GT, GEQ, EQ, NEQ).
             return "\"nodo" + contNodos + "\"[label=\"" + this.getOperador() +"\nTipo: <" +this.tipoExpresion+">\" "
                     + "shape= square "
