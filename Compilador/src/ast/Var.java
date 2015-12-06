@@ -78,7 +78,26 @@ public class Var extends Nodo implements visitaNodo {
         }
            
     }
-    
+    /**
+     * metodo que genera el codigo extendido Graphviz para el nodo Var.
+     * @param contNodos la cantidad de nodos visitados.
+     * @return codigo Graph del nodo.
+     */
+    public String toExtendedGrapher(int contNodos){
+        
+        //condicionante usado para crar el codigo segun si la expresion corresponde a un numero o un nodo.
+        if(this.Expression==null){
+            return "\"nodo"+contNodos+"\"[label=\"Variable: "+this.ID+", <"+this.tipoVar+">\" "
+                    + "color = orangered "
+                    + "style = filled]; \n";
+        }else{
+            //en caso contrario, la expresion corresponde a un numero.
+            return "\"nodo"+contNodos+"\"[label=\"Variable: "+this.ID+"[]"+", <"+this.tipoVar+">\" "
+                    + "color = orangered "
+                    + "style = filled]; \n";
+        }
+           
+    }
     /**
      * metodo que genera el codigo GRaphviz del nodo Var en caso de que guarde un numero.
      * @param contNodos la cantidad de nodos visitados.

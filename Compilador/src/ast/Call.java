@@ -21,6 +21,7 @@ public class Call extends Nodo implements visitaNodo {
     //Lista que guarda los argumentos.
     ArrayList<Nodo> listaArgs= new ArrayList<Nodo>(); 
     //variable que guarda el valor de retorno en caso de que sea un llamado a una funcion int.
+    private String tipoCall;
     //sin uso, borrar cuando se utilize.
     private int valorRetorno=0;
     
@@ -62,6 +63,18 @@ public class Call extends Nodo implements visitaNodo {
                 + "color = thistle2 "
                 + "style = filled]; \n";
     }
+    /**
+     * metodo que genera el codigo extendido en graphviz del nodo call.
+     * @param contNodos la cantidad de nodos visitados.
+     * @return codigo generado.
+     */
+    public String toExtendedGrapher(int contNodos){
+        //return "\"nodo"+contNodos+"\"[label=\"Call : "+this.ID+"\" color = thistle2 style = filled]; \n";
+        return "\"nodo"+contNodos+"\"[label=\"Call : "+this.getID()+", <"+this.tipoCall+">\" "
+                + "shape = triangle "
+                + "color = thistle2 "
+                + "style = filled]; \n";
+    }
     @Override
     public void aceptar(GrapherVisitor v) {
         v.visitar(this);
@@ -94,6 +107,20 @@ public class Call extends Nodo implements visitaNodo {
      */
     public String getID() {
         return ID;
+    }
+
+    /**
+     * @return the tipoCall
+     */
+    public String getTipoCall() {
+        return tipoCall;
+    }
+
+    /**
+     * @param tipoCall the tipoCall to set
+     */
+    public void setTipoCall(String tipoCall) {
+        this.tipoCall = tipoCall;
     }
 
     
