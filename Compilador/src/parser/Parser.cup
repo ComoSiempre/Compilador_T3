@@ -374,14 +374,20 @@ return_stmt         ::= RETURN PUNTOCOMA
                                 this.parser.cadena = "return ::= RETURN SEMICOLON \n"+this.parser.cadena;
                                 //flag de return como true.
                                 this.parser.flagReturn=true;
-                                RESULT=new Statement("return");
+                                Statement stmt = new Statement("return");
+                                stmt.setFila(idleft+1);
+                                stmt.setColumna(idright+1);
+                                RESULT=stmt;
                                 
                             :}
                         | RETURN expression:e PUNTOCOMA 
                             {:
                                 this.parser.cadena = "return ::= RETURN expression SEMICOLON \n"+this.parser.cadena;
                                 this.parser.flagReturn=true;
-                                RESULT=new Statement("return",e);
+                                Statement stmt = new Statement("return",e);
+                                stmt.setFila(idleft+1);
+                                stmt.setColumna(idright+1);
+                                RESULT=stmt;
                             :};
 
 expression          ::= var:v ASSIGN:a expression:e 
