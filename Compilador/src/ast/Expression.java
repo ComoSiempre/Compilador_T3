@@ -22,7 +22,7 @@ public class Expression extends Nodo implements visitaNodo {
     Nodo operacion2; //variable que puede ser un numero (String en .cup) o un Nodo Var o Call o Expression.
     int valor=0; //variable que guardara el valor de las operaciones de +,-,*,/,^,**.
     boolean esComparacion=false; //variable flag que verificara si la expresion es una operacion o comparacion(EQ,LT,LEQ,etc..)
-    
+    private String tipoExpresion; //variable usada para guardar el tipo de las operaciones (uso en chequeo de tipos).
     
     /**
      * constructor 1. usado en caso que que el operador este ligado con dos Nodos expresiones.
@@ -178,10 +178,17 @@ public class Expression extends Nodo implements visitaNodo {
         //genero codigo segun el tipo de expresion.
         //en caso de que el nodo sea una expresion de calculo (+,-,*,/,**,^)
         if(this.esComparacion==false){
-            return "\"nodo"+contNodos+"\"[label=\""+this.operador+"\nValue: "+this.valor+"\"]; \n";
+            return "\"nodo"+contNodos+"\"[label=\""+this.operador+"\nValue: "+this.valor+"\" "
+                    + "shape=polygon "
+                    + "sides = 5 "
+                    + "style = filled "
+                    + "color = greenyellow]; \n";
         }else{
             //caso contrario, corresponderia a un nodo de comparacion (LEQ, LT, GT, GEQ, EQ, NEQ).
-            return "\"nodo"+contNodos+"\"[label=\""+this.operador+"\"]; \n";
+            return "\"nodo"+contNodos+"\"[label=\""+this.operador+"\" "
+                    + "shape= square "
+                    + "style = filled "
+                    + "color = greenyellow]; \n";
         }
         
     }
@@ -239,6 +246,20 @@ public class Expression extends Nodo implements visitaNodo {
     @Override
     public void aceptar(ExtendedGrapherVisitor v2) {
         v2.visitar(this);
+    }
+
+    /**
+     * @return the tipoExpresion
+     */
+    public String getTipoExpresion() {
+        return tipoExpresion;
+    }
+
+    /**
+     * @param tipoExpresion the tipoExpresion to set
+     */
+    public void setTipoExpresion(String tipoExpresion) {
+        this.tipoExpresion = tipoExpresion;
     }
     
     
