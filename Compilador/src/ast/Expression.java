@@ -11,36 +11,41 @@ import semanticVisitor.TypeCheckVisitor;
 import syntaxVisitor.GrapherVisitor;
 
 /**
- * Clase usada para la crecion de nodos de operaciones.
- * gramaticas 20, 22, 24, 26, 28.
+ * Clase usada para la crecion de nodos de operaciones. gramaticas 20, 22, 24,
+ * 26, 28.
+ *
  * @author Jonathan Vasquez - Eduardo Tapia.
  */
 public class Expression extends Nodo implements visitaNodo {
 
     Nodo operacion1; //variable que puede ser tanto un Nodo expresion como Var(con variable o numero).
-    String operador; // puede ser un operador de la gramatica relop, mulop, addop, powop.
+    private String operador; // puede ser un operador de la gramatica relop, mulop, addop, powop, ASSIGN
     Nodo operacion2; //variable que puede ser un numero (String en .cup) o un Nodo Var o Call o Expression.
-    int valor=0; //variable que guardara el valor de las operaciones de +,-,*,/,^,**.
-    boolean esComparacion=false; //variable flag que verificara si la expresion es una operacion o comparacion(EQ,LT,LEQ,etc..)
+    int valor = 0; //variable que guardara el valor de las operaciones de +,-,*,/,^,**.
+    boolean esComparacion = false; //variable flag que verificara si la expresion es una operacion o comparacion(EQ,LT,LEQ,etc..)
     private String tipoExpresion; //variable usada para guardar el tipo de las operaciones (uso en chequeo de tipos).
-    
+
     /**
-     * constructor 1. usado en caso que que el operador este ligado con dos Nodos expresiones.
-     * @param op1 
-     * @param op 
-     * @param ex 
+     * constructor 1. usado en caso que que el operador este ligado con dos
+     * Nodos expresiones.
+     *
+     * @param op1
+     * @param op
+     * @param ex
      */
-    public Expression(Nodo op1, String op, Nodo ex){
-        this.operacion1=op1;
-        this.operador=op;
-        this.operacion2=ex;
-        
+    public Expression(Nodo op1, String op, Nodo ex) {
+        this.operacion1 = op1;
+        this.operador = op;
+        this.operacion2 = ex;
+
     }
+
     /**
      * metodo que hace el calculo de 2 numeros segun un operador.
+     *
      * @param operador que puede ser +, -, *, /.
      */
-    private void calcular2NUM(String operador){
+    private void calcular2NUM(String operador) {
         switch (operador) {
             case "+":
                 this.valor = ((Var) this.operacion1).getNumeroExpresion() + ((Var) this.operacion2).getNumeroExpresion();
@@ -52,22 +57,25 @@ public class Expression extends Nodo implements visitaNodo {
                 this.valor = ((Var) this.operacion1).getNumeroExpresion() * ((Var) this.operacion2).getNumeroExpresion();
                 break;
             case "/":
-                if(((Var)this.operacion2).getNumeroExpresion()==0){
+                if (((Var) this.operacion2).getNumeroExpresion() == 0) {
                     //en caso de que de la operacion : 5/0 por ejemplo.
                     //esto no deberia suceder, pero sucedio al testear la sintaxis, deberia ser error semantico (modificar esto para que lanze error semantico).
-                    this.valor=0; 
-                }else{
+                    this.valor = 0;
+                } else {
                     this.valor = ((Var) this.operacion1).getNumeroExpresion() / ((Var) this.operacion2).getNumeroExpresion();
                 }
                 break;
         }
 
     }
+
     /**
-     * metodo que calcula la operacion de el resultado de una expresion y un numero.
+     * metodo que calcula la operacion de el resultado de una expresion y un
+     * numero.
+     *
      * @param operador que puede ser +, -, *, /.
      */
-    private void calcular1Exp1NUM(String operador){
+    private void calcular1Exp1NUM(String operador) {
         switch (operador) {
             case "+":
                 this.valor = ((Expression) this.operacion1).getValor() + ((Var) this.operacion2).getNumeroExpresion();
@@ -84,11 +92,14 @@ public class Expression extends Nodo implements visitaNodo {
         }
 
     }
+
     /**
-     * metodo que calcula la operacion de el resultado de una expresion y un numero.
+     * metodo que calcula la operacion de el resultado de una expresion y un
+     * numero.
+     *
      * @param operador que puede ser +, -, *, /.
      */
-    private void calcular1NUM1Exp(String operador){
+    private void calcular1NUM1Exp(String operador) {
         switch (operador) {
             case "+":
                 this.valor = ((Var) this.operacion1).getNumeroExpresion() + ((Expression) this.operacion2).getValor();
@@ -97,7 +108,8 @@ public class Expression extends Nodo implements visitaNodo {
                 this.valor = ((Var) this.operacion1).getNumeroExpresion() - ((Expression) this.operacion2).getValor();
                 break;
             case "*":
-                this.valor = ((Var) this.operacion1).getNumeroExpresion() * ((Expression) this.operacion2).getValor();;
+                this.valor = ((Var) this.operacion1).getNumeroExpresion() * ((Expression) this.operacion2).getValor();
+                ;
                 break;
             case "/":
                 this.valor = ((Var) this.operacion1).getNumeroExpresion() / ((Expression) this.operacion2).getValor();
@@ -105,11 +117,14 @@ public class Expression extends Nodo implements visitaNodo {
         }
 
     }
+
     /**
-     * metodo que calcula el resultado de la operacion entre los resultados de las 2 expresiones.
+     * metodo que calcula el resultado de la operacion entre los resultados de
+     * las 2 expresiones.
+     *
      * @param operador que puede ser +, -, *, /.
      */
-    private void calcular2Exp(String operador){
+    private void calcular2Exp(String operador) {
         switch (operador) {
             case "+":
                 this.valor = ((Expression) this.operacion1).getValor() + ((Expression) this.operacion2).getValor();
@@ -118,7 +133,8 @@ public class Expression extends Nodo implements visitaNodo {
                 this.valor = ((Expression) this.operacion1).getValor() - ((Expression) this.operacion2).getValor();
                 break;
             case "*":
-                this.valor = ((Expression) this.operacion1).getValor() * ((Expression) this.operacion2).getValor();;
+                this.valor = ((Expression) this.operacion1).getValor() * ((Expression) this.operacion2).getValor();
+                ;
                 break;
             case "/":
                 this.valor = ((Expression) this.operacion1).getValor() / ((Expression) this.operacion2).getValor();
@@ -126,108 +142,116 @@ public class Expression extends Nodo implements visitaNodo {
         }
 
     }
+
     /**
      * metodo que calcula las operaciones dependiendo del tipo de operacion.
-     * pueden ser operaciones con 2 numeros, 1 numero y 1 expresion, 1 expresion y un 1 numero o 2 expresiones.
+     * pueden ser operaciones con 2 numeros, 1 numero y 1 expresion, 1 expresion
+     * y un 1 numero o 2 expresiones.
      */
-    public void calculoValor(){
+    public void calculoValor() {
         //se verifica todas las posibilidades de operacion.
         //se verifica que operacion1 y operacion2 sean Var numero.
-        if(this.operacion1 instanceof Var && this.operacion2 instanceof Var){
+        if (this.operacion1 instanceof Var && this.operacion2 instanceof Var) {
             //verifico que las operaciones sean numeros.
-            if((((Var)this.operacion1).getID() ==null && ((Var)this.operacion1).getExpression() == null)
-                                &&(((Var)this.operacion2).getID() ==null && ((Var)this.operacion2).getExpression() == null)){
+            if ((((Var) this.operacion1).getID() == null && ((Var) this.operacion1).getExpression() == null)
+                    && (((Var) this.operacion2).getID() == null && ((Var) this.operacion2).getExpression() == null)) {
                                 //las dos espresiones son numeros.
-                                //se realiza la operacion y se guarda el resultado en el nodo.
-                                calcular2NUM(this.operador);
-                                
-                            }
+                //se realiza la operacion y se guarda el resultado en el nodo.
+                calcular2NUM(this.getOperador());
+
+            }
         }
         //se verifica que op1 es Expresion de otra operacion y op2 sea Var numero.
-        if(this.operacion1 instanceof Expression && this.operacion2 instanceof Var){
+        if (this.operacion1 instanceof Expression && this.operacion2 instanceof Var) {
             //se verifica que Var sea nodo numero.
-            if(((Var)this.operacion2).getID()==null && ((Var)this.operacion2).getExpression()==null){
+            if (((Var) this.operacion2).getID() == null && ((Var) this.operacion2).getExpression() == null) {
                 //el nodo Var es un numero.
-                calcular1Exp1NUM(this.operador);
+                calcular1Exp1NUM(this.getOperador());
             }
-            
+
         }
         //se verifica que op1 sea Var numero y op2 sea Expresion de otra operacion.
-        if(this.operacion1 instanceof Var && this.operacion2 instanceof Expression){
+        if (this.operacion1 instanceof Var && this.operacion2 instanceof Expression) {
             //se verifica que Var sea nodo numero.
-            if(((Var)this.operacion1).getID()==null && ((Var)this.operacion1).getExpression()==null){
+            if (((Var) this.operacion1).getID() == null && ((Var) this.operacion1).getExpression() == null) {
                 //el nodo Var es un numero.
-                calcular1NUM1Exp(this.operador);
+                calcular1NUM1Exp(this.getOperador());
             }
         }
         //se verifica que la operacion sea entre 2 expresiones.
-        if(this.operacion1 instanceof Expression && this.operacion2 instanceof Expression){
+        if (this.operacion1 instanceof Expression && this.operacion2 instanceof Expression) {
             //verifico que las expresiones sea de operaciones calculables.
-            if(((Expression)this.operacion1).getEsComparacion()==false && ((Expression)this.operacion2).getEsComparacion()==false){
+            if (((Expression) this.operacion1).getEsComparacion() == false && ((Expression) this.operacion2).getEsComparacion() == false) {
                 //las espresiones son calculables, por lo que tiene valor.
-                calcular2Exp(this.operador);
+                calcular2Exp(this.getOperador());
             }
         }
     }
+
     /**
      * metodo que genera el codigo del nodo Expresion para Graphviz.
+     *
      * @param contNodos la cantidad de nodods visitados.
      * @return codigo Graphviz.
      */
-    public String toGrapher(int contNodos){
+    public String toGrapher(int contNodos) {
         //genero codigo segun el tipo de expresion.
         //en caso de que el nodo sea una expresion de calculo (+,-,*,/,**,^)
-        if(this.esComparacion==false){
-            return "\"nodo"+contNodos+"\"[label=\""+this.operador+"\nValue: "+this.valor+"\" "
+        if (this.esComparacion == false) {
+            return "\"nodo" + contNodos + "\"[label=\"" + this.getOperador() + "\nValue: " + this.valor + "\" "
                     + "shape=polygon "
                     + "sides = 5 "
                     + "style = filled "
                     + "color = greenyellow]; \n";
-        }else{
+        } else {
             //caso contrario, corresponderia a un nodo de comparacion (LEQ, LT, GT, GEQ, EQ, NEQ).
-            return "\"nodo"+contNodos+"\"[label=\""+this.operador+"\" "
+            return "\"nodo" + contNodos + "\"[label=\"" + this.getOperador() + "\" "
                     + "shape= square "
                     + "style = filled "
                     + "color = greenyellow]; \n";
         }
-        
+
     }
+
     /**
-     * metodo usado en caso de que sea una operacion de asignacion, expression -> var ASSIGN expresion (gramatica 20).
+     * metodo usado en caso de que sea una operacion de asignacion, expression
+     * -> var ASSIGN expresion (gramatica 20).
      */
-    public void asignarValor(){
+    public void asignarValor() {
         //verifico si la expresion es un Var numero  o un nodo expresion diferente.
-        if(this.operacion2 instanceof Expression){
+        if (this.operacion2 instanceof Expression) {
             //quiere decir que la expresion viene de alguna gramatica de operacion d comparacacion o de calculo.
-            this.valor =((Expression)this.operacion2).getValor();
-        }else if(this.operacion2 instanceof Call){//en caso de que la asignacion sea desde un llamado a funcion.
-            this.valor=((Call)this.operacion2).getValorRetorno();
-        }else{//en caso contrario, el nodo corresponde a un nodo Var, por lo que el valor guardado esta en la variable de numero de var.
-            this.valor =((Var)this.operacion2).getNumeroExpresion();
+            this.valor = ((Expression) this.operacion2).getValor();
+        } else if (this.operacion2 instanceof Call) {//en caso de que la asignacion sea desde un llamado a funcion.
+            this.valor = ((Call) this.operacion2).getValorRetorno();
+        } else {//en caso contrario, el nodo corresponde a un nodo Var, por lo que el valor guardado esta en la variable de numero de var.
+            this.valor = ((Var) this.operacion2).getNumeroExpresion();
         }
-        
+
     }
-    
+
     //metodos GET.
-    
-    public Nodo getOperador1(){
+    public Nodo getOperador1() {
         return this.operacion1;
     }
-    public Nodo getOperador2(){
+
+    public Nodo getOperador2() {
         return this.operacion2;
     }
-    public int getValor(){
+
+    public int getValor() {
         return this.valor;
     }
-    public boolean getEsComparacion(){
+
+    public boolean getEsComparacion() {
         return this.esComparacion;
     }
     //metodos SET.
-    
-    public void setEsComparacion(boolean flag){
-        this.esComparacion=flag;
+
+    public void setEsComparacion(boolean flag) {
+        this.esComparacion = flag;
     }
-    
+
     @Override
     public void aceptar(GrapherVisitor v) {
         v.visitar(this);
@@ -235,7 +259,7 @@ public class Expression extends Nodo implements visitaNodo {
 
     @Override
     public void aceptar(ScopeAnalisisVisitor s) {
-       s.visitar(this);
+        s.visitar(this);
     }
 
     @Override
@@ -261,6 +285,12 @@ public class Expression extends Nodo implements visitaNodo {
     public void setTipoExpresion(String tipoExpresion) {
         this.tipoExpresion = tipoExpresion;
     }
-    
-    
+
+    /**
+     * @return the operador
+     */
+    public String getOperador() {
+        return operador;
+    }
+
 }
