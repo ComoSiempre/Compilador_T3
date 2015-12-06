@@ -38,7 +38,10 @@ public class Compound extends Nodo implements visitaNodo {
      * @return codigo para Graphviz.
      */
     public String toGrapher(int contNodos){
-        return "\"nodo"+contNodos+"\"[label=\"Compound Statement\", color=deepskyblue]; \n";
+        return "\"nodo"+contNodos+"\"[label=\"Compound Statement\" "
+                + "shape = trapezium "
+                + "color = deepskyblue "
+                + "style = filled]; \n";
     }
     /**
      * metodo GET que retorna la lista de variables locales.

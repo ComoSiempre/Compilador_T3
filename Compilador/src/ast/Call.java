@@ -56,7 +56,11 @@ public class Call extends Nodo implements visitaNodo {
      * @return codigo generado.
      */
     public String toGrapher(int contNodos){
-        return "\"nodo"+contNodos+"\"[label=\"Call : "+this.ID+"\" color=thistle2]; \n";
+        //return "\"nodo"+contNodos+"\"[label=\"Call : "+this.ID+"\" color = thistle2 style = filled]; \n";
+        return "\"nodo"+contNodos+"\"[label=\"Call : "+this.ID+"\" "
+                + "shape = triangle "
+                + "color = thistle2 "
+                + "style = filled]; \n";
     }
     @Override
     public void aceptar(GrapherVisitor v) {

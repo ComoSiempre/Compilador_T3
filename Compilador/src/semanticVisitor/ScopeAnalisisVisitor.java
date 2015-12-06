@@ -96,10 +96,7 @@ public class ScopeAnalisisVisitor implements visitor {
 
     @Override
     public void visitar(VarDec vardeclaration) {
-        if(vardeclaration.getTipoID().equalsIgnoreCase("void")){
-            System.err.println("Error Semantico!. Fila: "+vardeclaration.getFila()+", Columna: "+vardeclaration.getColumna()+".\nLa variable "+vardeclaration.getID()+" es de tipo VOID.");
-            System.exit(0);//termino el proceso de compilacion.
-        }
+        
         boolean resultado = this.tablaSimbolos.insertSymbol(vardeclaration);
         //condicionante usado en caso de que no se ingresara la declaracion en tabla (ya existe uno con igual id y tipo).
         if(!resultado){

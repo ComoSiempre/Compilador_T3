@@ -51,7 +51,11 @@ public class FunDec extends Nodo implements visitaNodo {
      * @return la linea de codigo.
      */
     public String toGrapher(int contNodos){
-        return "\"nodo"+contNodos+"\"[label=\"Funcion: "+this.ID+","+this.tipoIDFuntion+"\"]; \n";
+        return "\"nodo"+contNodos+"\"[label=\"Funcion: "+this.ID+","+this.tipoIDFuntion+"\" "
+                + "shape= polygon "
+                + "sides = 7 "
+                + "style = filled "
+                + "color = lightskyblue1]; \n";
     }
     
     

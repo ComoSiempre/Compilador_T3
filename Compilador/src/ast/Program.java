@@ -46,7 +46,9 @@ public class Program implements visitaNodo {
      * @return linea de codigo.
      */
     public String toGrapher(int contNodos){
-        String linea="\"nodo"+contNodos+"\"[label=\"Progama\"]; \n";
+        String linea="\"nodo"+contNodos+"\"[label=\"Progama\" "
+                + "shape = diamond "
+                + "style = \"rounded,filled\"]; \n";
         return linea;
     }
     @Override

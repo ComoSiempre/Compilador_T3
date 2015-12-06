@@ -44,12 +44,18 @@ public class Param extends Nodo implements visitaNodo {
         if(this.isEsParamVector()){
             //parametro vector.
             //ingreso el codigo de creacion a la cadeno de codigo graphviz.
-            linea += "\"nodo"+contNodos+"\"[label=\"Param["+this.getIDParametro()+","+this.getTipoParametro()+"[]]\"]; \n";
+            linea += "\"nodo"+contNodos+"\"[label=\"Param["+this.getIDParametro()+","+this.getTipoParametro()+"[]]\" "
+                    + "shape = oval "
+                    + "color = red "
+                    + "style = filled]; \n";
             //enlazo con el padre.
             linea += nombrePadre+"->\"nodo"+contNodos+"\"; \n";
         }else{
             //parametro normal.
-            linea += "\"nodo"+contNodos+"\"[label=\"Param["+this.getIDParametro()+","+this.getTipoParametro()+"]\"]; \n";
+            linea += "\"nodo"+contNodos+"\"[label=\"Param["+this.getIDParametro()+","+this.getTipoParametro()+"]\" "
+                    + "shape = oval "
+                    + "color = red "
+                    + "style = filled]; \n";
             linea += nombrePadre+"->\"nodo"+contNodos+"\"; \n";
         }
         return linea;

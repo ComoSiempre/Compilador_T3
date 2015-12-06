@@ -64,10 +64,14 @@ public class Var extends Nodo implements visitaNodo {
         
         //condicionante usado para crar el codigo segun si la expresion corresponde a un numero o un nodo.
         if(this.Expression==null){
-            return "\"nodo"+contNodos+"\"[label=\"Variable: "+this.ID+"\"]; \n";
+            return "\"nodo"+contNodos+"\"[label=\"Variable: "+this.ID+"\" "
+                    + "color = orangered "
+                    + "style = filled]; \n";
         }else{
             //en caso contrario, la expresion corresponde a un numero.
-            return "\"nodo"+contNodos+"\"[label=\"Variable: "+this.ID+"[]\"]; \n";
+            return "\"nodo"+contNodos+"\"[label=\"Variable: "+this.ID+"[]\" "
+                    + "color = orangered "
+                    + "style = filled]; \n";
         }
            
     }
@@ -78,7 +82,9 @@ public class Var extends Nodo implements visitaNodo {
      * @return codigo Graph del nodo.
      */
     public String toGrapherNumero(int contNodos){
-        return "\"nodo"+contNodos+"\"[label=\""+this.numeroExpresion+"\"]; \n";
+        return "\"nodo"+contNodos+"\"[label=\""+this.numeroExpresion+"\" "
+                + "color = orangered "
+                + "style = filled]; \n";
     }
     
     //metodos GET.

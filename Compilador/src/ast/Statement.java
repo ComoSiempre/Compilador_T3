@@ -103,7 +103,10 @@ public class Statement extends Nodo implements visitaNodo {
      * @return cadena de codigo.
      */
     public String toGrapher(int contNodos){
-        return "\"nodo"+contNodos+"\"[label=\""+this.tipoDeclaracion+"\"]; \n";
+        return "\"nodo"+contNodos+"\"[label=\""+this.tipoDeclaracion+"\" "
+                + "shape = parallelogram "
+                + "color = deeppink1 "
+                + "style = filled]; \n";
     }
     public String getTipoDeclaracion(){
         return this.tipoDeclaracion;

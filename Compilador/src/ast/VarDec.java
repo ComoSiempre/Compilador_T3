@@ -56,11 +56,17 @@ public class VarDec extends Nodo implements visitaNodo {
         //condicionante segun el tipo de declaracion de variable.
         if (this.isEsVector()==false){
             //se crea el nodo dandole el identificador.
-            lineas += "\"nodo"+contNodos+"\"[label=\""+this.getID()+":"+this.getTipoID()+"\"]; \n";
+            lineas += "\"nodo"+contNodos+"\"[label=\""+this.getID()+":"+this.getTipoID()+"\" "
+                    + "shape = box "
+                    + "color = red "
+                    + "style = filled]; \n";
             //enlazo el nuevo nodo con su padre.
             lineas += nombrePadre+"->\"nodo"+contNodos+"\"; \n";
         }else{
-            lineas += "\"nodo"+contNodos+"\"[label=\""+this.getID()+":"+this.getTipoID()+"["+this.getNumeroVector()+"]\"]; \n";
+            lineas += "\"nodo"+contNodos+"\"[label=\""+this.getID()+":"+this.getTipoID()+"["+this.getNumeroVector()+"]\" "
+                    + "shape = box "
+                    + "color = red "
+                    + "style = filled]; \n";
             lineas += nombrePadre+"->\"nodo"+contNodos+"\"; \n";
         }
         return lineas;
