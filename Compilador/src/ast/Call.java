@@ -17,7 +17,7 @@ import syntaxVisitor.GrapherVisitor;
  */
 public class Call extends Nodo implements visitaNodo {
     //variable que guarda el nombre de la funcion que se esta llamando.
-    String ID;
+    private String ID;
     //Lista que guarda los argumentos.
     ArrayList<Nodo> listaArgs= new ArrayList<Nodo>(); 
     //variable que guarda el valor de retorno en caso de que sea un llamado a una funcion int.
@@ -57,7 +57,7 @@ public class Call extends Nodo implements visitaNodo {
      */
     public String toGrapher(int contNodos){
         //return "\"nodo"+contNodos+"\"[label=\"Call : "+this.ID+"\" color = thistle2 style = filled]; \n";
-        return "\"nodo"+contNodos+"\"[label=\"Call : "+this.ID+"\" "
+        return "\"nodo"+contNodos+"\"[label=\"Call : "+this.getID()+"\" "
                 + "shape = triangle "
                 + "color = thistle2 "
                 + "style = filled]; \n";
@@ -88,5 +88,14 @@ public class Call extends Nodo implements visitaNodo {
     public int getValorRetorno() {
         return valorRetorno;
     }
+
+    /**
+     * @return the ID
+     */
+    public String getID() {
+        return ID;
+    }
+
+    
     
 }
