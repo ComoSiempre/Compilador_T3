@@ -213,6 +213,32 @@ public class Expression extends Nodo implements visitaNodo {
 
     }
 
+        /**
+     * metodo que genera el codigo extendidido del nodo Expresion para Graphviz.
+     *
+     * @param contNodos la cantidad de nodods visitados.
+     * @return codigo Graphviz.
+     */
+    public String toExtendedGrapher(int contNodos) {
+        //genero codigo segun el tipo de expresion.
+        //en caso de que el nodo sea una expresion de calculo (+,-,*,/,**,^)
+        if (this.esComparacion == false) {
+            return "\"nodo" + contNodos + "\"[label=\"" + this.getOperador() + "\nValue: " + this.valor + "\nTipo: <"+this.tipoExpresion+">\" "
+                    + "shape=polygon "
+                    + "sides = 5 "
+                    + "style = filled "
+                    + "color = greenyellow]; \n";
+        } else {
+            //caso contrario, corresponderia a un nodo de comparacion (LEQ, LT, GT, GEQ, EQ, NEQ).
+            return "\"nodo" + contNodos + "\"[label=\"" + this.getOperador() +"\nTipo: <" +this.tipoExpresion+">\" "
+                    + "shape= square "
+                    + "style = filled "
+                    + "color = greenyellow]; \n";
+        }
+
+    }
+
+    
     /**
      * metodo usado en caso de que sea una operacion de asignacion, expression
      * -> var ASSIGN expresion (gramatica 20).
