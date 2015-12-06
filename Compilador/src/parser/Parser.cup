@@ -369,14 +369,14 @@ for_stmt            ::= FOR PARENT_IZQ expression:e1 COMA expression:e2 COMA exp
                                 RESULT=new Statement("for",e1,e2,e3,s);
                             :};
 
-return_stmt         ::= RETURN PUNTOCOMA 
+return_stmt         ::= RETURN:r PUNTOCOMA 
                             {:
                                 this.parser.cadena = "return ::= RETURN SEMICOLON \n"+this.parser.cadena;
                                 //flag de return como true.
                                 this.parser.flagReturn=true;
                                 Statement stmt = new Statement("return");
-                                stmt.setFila(idleft+1);
-                                stmt.setColumna(idright+1);
+                                stmt.setFila(rleft+1);
+                                stmt.setColumna(rright+1);
                                 RESULT=stmt;
                                 
                             :}
@@ -385,8 +385,8 @@ return_stmt         ::= RETURN PUNTOCOMA
                                 this.parser.cadena = "return ::= RETURN expression SEMICOLON \n"+this.parser.cadena;
                                 this.parser.flagReturn=true;
                                 Statement stmt = new Statement("return",e);
-                                stmt.setFila(idleft+1);
-                                stmt.setColumna(idright+1);
+                                stmt.setFila(eleft+1);
+                                stmt.setColumna(eright+1);
                                 RESULT=stmt;
                             :};
 
