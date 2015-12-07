@@ -130,15 +130,16 @@ public class SymbolTable {
 		}
 	}
     /**
-     * Verifica que esxista un simbolo en la tabla de simolos
-     * @param var
-     * @return 
+     * Verifica que esxista un simbolo en la tabla de simbolos
+     * recorre los alcances
+     * @param nodo
+     * @return true si encuentra el simbolo
      */
-    public boolean lookupSymbol(Nodo var) {
+    public boolean lookupSymbol(Nodo nodo) {
         
         Alcance actual = this.ts.peek();
         while(actual!=null){
-            if (actual.buscaSimbolo(var)){
+            if (actual.buscaSimbolo(nodo)){
                 return true;
             }
             actual = actual.getPadre();
@@ -146,4 +147,81 @@ public class SymbolTable {
         }
         return false;
     }
+    
+    /**
+     * Verifica que esxista un simbolo en la tabla de simbolos
+     * recorre los alcances
+     * @param nodo
+     * @return true si encuentra el simbolo
+     */
+    public boolean lookupSymbol(Nodo nodo, Alcance actual) {
+        
+        
+        while(actual!=null){
+            if (actual.buscaSimbolo(nodo)){
+                return true;
+            }
+            actual = actual.getPadre();
+            
+        }
+        return false;
+    }
+    public boolean lookupSymbol(Nodo nodo, Alcance actual, String id) {
+        
+        
+        while(actual!=null){
+            if (actual.buscaSimbolo(nodo)){
+                return true;
+            }
+            actual = actual.getPadre();
+            
+        }
+        return false;
+    }
+    
+    /**
+     * Busca y retorna el tipo de dato del symbolo encontrado en la tabla
+     *
+     * @param nodo
+     * @param buscoTipo
+     * @return 
+     */
+    
+    public String retornaTipo(Nodo nodo, Alcance actual) {
+        
+        while(actual!=null){
+            if (actual.buscaSimbolo(nodo)){
+                return actual.retornaTipo(nodo);
+            }
+            actual = actual.getPadre();
+            
+        }
+        return null;
+    }
+    
+    /*
+    Retotorna el tipo basado en la busqueda de una id en la 
+    */
+    public String retornaTipo(Nodo nodo, Alcance actual, String id) {
+        
+        while(actual!=null){
+            if (actual.buscaSimbolo(nodo)){
+                return actual.buscaSimbolo(id);
+            }
+            actual = actual.getPadre();
+            
+        }
+        return null;
+    }
+
+    public Alcance getAlcance(int contextoActual) {
+        for (Alcance t : ts) {
+            if(t.getNumeroAlcance()==contextoActual)
+                return t;
+        }
+        return null;
+    }
+    
+        
+    
 }

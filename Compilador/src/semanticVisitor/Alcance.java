@@ -6,6 +6,7 @@
 package semanticVisitor;
 
 import ast.*;
+import com.sun.org.apache.xpath.internal.functions.FuncDoclocation;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -121,6 +122,19 @@ public class Alcance {
                     
                 }
             }
+            
+
+                //en caso de que exista un call 
+            if(nodo instanceof FunDec && nodoEvaluacion instanceof Call){
+                //pregunto por la id.
+                if(((FunDec)nodo).getID().equalsIgnoreCase(((Call)nodoEvaluacion).getID())){
+                    //ahora pregunto por los argumentos.()solo tamaño.
+                    if(((FunDec)nodo).getListaParametros().size() == ((Call)nodoEvaluacion).getArgs().size()){
+                        return true;//existe en el alcance actual.
+                    }
+                }
+            }
+                            
             
             //se verifica una declaracion de variable.
             if(nodo instanceof VarDec && nodoEvaluacion instanceof VarDec){
@@ -318,7 +332,7 @@ public class Alcance {
         this.numeroAlcance = numeroAlcance;
     }
 
-    public boolean buscaSimbolo(Nodo var) {
-       return existeSimbolo(var);
+    public boolean buscaSimbolo(Nodo nodo) {
+       return existeSimbolo(nodo);
     }
 }
