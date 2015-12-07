@@ -94,7 +94,7 @@ public class Alcance {
                     && ((FunDec) nodoEvaluacion).getID().equalsIgnoreCase("input")
                     && ((FunDec) nodoEvaluacion).getParametroVoid()){
                 return true; //no se puede ingresar porque es la funcion glabal "input".
-            }
+            }//recorro la lista de declaraciones.
             if(((FunDec) nodoEvaluacion).getTipoIDFuntion().equalsIgnoreCase("void")
                     && ((FunDec) nodoEvaluacion).getID().equalsIgnoreCase("output")
                     && !((FunDec) nodoEvaluacion).getParametroVoid()
@@ -171,6 +171,48 @@ public class Alcance {
     
     
     /**
+     * Retorna el tipo de dato asociado a una nodo en la tabla de simbolos
+     * @param nodoEvaluacion
+     * @return 
+     */
+    public String retornaTipo(Nodo nodoEvaluacion){
+        
+        // Ya se conoce que no existen declaraciones repetidas... procedo a retornar el tipo de dato
+        //recorro la lista de declaraciones.
+        for(Nodo nodo : this.listaDeclaraciones){
+            //si se verifican funciones.
+           
+            //si el nodo actual es una declaracion de funcion y es igual al nodo que le entrego
+            //retorno su tipo
+            if(nodo instanceof FunDec && nodoEvaluacion instanceof FunDec){
+                if(nodoEvaluacion == nodo){
+                    return ((FunDec)nodo).getTipoIDFuntion();
+                }
+            }
+            
+            //se verifica una declaracion de variable.
+            if(nodo instanceof VarDec && nodoEvaluacion instanceof VarDec){
+                if(nodoEvaluacion == nodo){
+                        return ((VarDec)nodo).getTipoID();
+                        }
+            }
+            
+            if (nodo instanceof VarDec && nodoEvaluacion instanceof Var) {
+                if (((VarDec) nodo).getID().equals(((Var) nodoEvaluacion).getID())) {
+                    return ((VarDec)nodo).getTipoID();
+                }
+            }
+            //en caso de comparar una variable con un parametro de funcion.
+            if (nodo instanceof Param && nodoEvaluacion instanceof Var) {
+                return "INT";
+            }
+            
+        }//fin FOR.
+        return null;
+    }//fin funcion 'retornaTipo' 
+    
+    
+    /**
      * Retorna el tipo de dato en la tabla de simbolos dado un Id
      * Se asume que se ha verificado que existe el id en la tabla de simbolos
      * @param id
@@ -178,7 +220,7 @@ public class Alcance {
      */
     public String buscaSimbolo(String id){
         
-        //recorro la lista de declaraciones.
+        //recorro la lista de declaraciones del alcance
         for(Nodo nodo : this.listaDeclaraciones){
             //se verifican funciones.
             if(nodo instanceof FunDec){
@@ -211,7 +253,6 @@ public class Alcance {
             }//fin IF.
         }//fin FOR.
         System.err.println("Error no se encuentra tipo para: "+ id+ " ");
-        System.exit(0);
         return null; 
         
     }//fin funcion 'buscaSimbolo'
