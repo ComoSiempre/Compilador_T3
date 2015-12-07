@@ -10,6 +10,6 @@ void main(int g){
         int a;
         }
         {
-        a::=2;
+        a ::= 2;
         }
 }
