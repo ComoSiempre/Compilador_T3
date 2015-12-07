@@ -159,12 +159,20 @@ public class ScopeAnalisisVisitor implements visitor {
         }else{
             this.tablaSimbolos.pushScope(this.tablaSimbolos.getTabla().peek());
         }
-        
-        //variable que guarda el ultimo nodo ingresado el en alcance padre, 
+        //variable que guarda el ultimo nodo ingresado el en alcance padre,
         //sera usado para saber si este nodo es una funcion void.
+        Nodo ultimoIngreso;
+        //variable usada para saber cuantas declaraciones existen en el alcance "padre".
         int tamañoL = this.tablaSimbolos.getTabla().peek().getPadre().getTamañoLista();
+        if(tamañoL == 0){
+            //quiere decir que en el alcance padre, no hubo declaraciones (bloque vacio, o con expresiones).
+            ultimoIngreso=null;
+        }else{
+            //existen declaraciones en el alcance padre, por lo que puedo evaluarlo.
+            ultimoIngreso = this.tablaSimbolos.getTabla().peek().getPadre().listaDeclaraciones.get(tamañoL-1);
+        }
         
-        Nodo ultimoIngreso = this.tablaSimbolos.getTabla().peek().getPadre().listaDeclaraciones.get(tamañoL-1);
+        
         
         if(ultimoIngreso instanceof FunDec){
             //aqui ya se que es un comund de funcion.
