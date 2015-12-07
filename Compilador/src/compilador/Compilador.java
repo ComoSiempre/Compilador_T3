@@ -229,9 +229,7 @@ public class Compilador {
             System.out.println("3.- Ejercicio_3.ks");
             System.out.println("4.- Ejercicio_4.ks");
             System.out.println("5.- Ejercicio_5.ks");
-            System.out.println("6.- Ejercicio_6.ks");
-            System.out.println("7.- Ejercicio_7.ks");
-            System.out.println("8.- Salir");
+            System.out.println("6.- Salir");
             System.out.println("Seleccionar un ejercicio a compilar:");
             sel = in.nextLine();
             char[] s = sel.toCharArray();
@@ -243,21 +241,15 @@ public class Compilador {
                     compilar(dir+"/ejercicio_2.ks",dir,2);
                     break;
                 case '3':
-                    compilar(dir+"/Codigos_de_Prueba/testVarNoInicializada.ks",dir,3);
+                    compilar(dir+"/ejercicio_3.ks",dir,3);
                     break;
                 case '4':
-                    compilar(dir+"/P1_AllSyntax.ks",dir,4);
+                    compilar(dir+"/ejercicio_4.ks",dir,4);
                     break;
                 case'5':
-                    compilar(dir+"/ejemplo_5.txt",dir,5);
+                    compilar(dir+"//ejercicio_5.ks",dir,5);
                     break;
                 case '6':
-                    compilar(dir+"/ejemplo_6.txt",dir,6);
-                    break;
-                case '7':
-                    compilar(dir+"/ejemplo_7.txt",dir,7);
-                    break;
-                case '8':
                     flag=false;
                     break;
                 default:
