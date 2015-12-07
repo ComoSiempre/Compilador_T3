@@ -18,6 +18,7 @@ import java.util.Scanner;
 import java_cup.runtime.Symbol;
 import parser.*;
 import scanner.*;
+import semanticVisitor.ExtendedGrapherVisitor;
 import semanticVisitor.ScopeAnalisisVisitor;
 import semanticVisitor.TypeCheckVisitor;
 import syntaxVisitor.GrapherVisitor;
@@ -202,6 +203,8 @@ public class Compilador {
             //generacion segundo recorrido semantico.
             TypeCheckVisitor sp2 = new TypeCheckVisitor();
             sp2.visitar(programa);
+            ExtendedGrapherVisitor visitor = new ExtendedGrapherVisitor(pathBase,numEjercicio);
+            visitor.visitar(programa);
         }catch(Exception ex){
             ex.printStackTrace();
             
@@ -243,7 +246,7 @@ public class Compilador {
                     compilar(dir+"/Codigos_de_Prueba/testVarNoInicializada.ks",dir,3);
                     break;
                 case '4':
-                    compilar(dir+"/ejemplo_4.txt",dir,4);
+                    compilar(dir+"/P1_AllSyntax.ks",dir,4);
                     break;
                 case'5':
                     compilar(dir+"/ejemplo_5.txt",dir,5);
